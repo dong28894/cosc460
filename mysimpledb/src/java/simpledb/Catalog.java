@@ -17,13 +17,26 @@ import java.util.concurrent.ConcurrentHashMap;
  * @Threadsafe
  */
 public class Catalog {
-
+	public static class IndieRecord{
+		public DbFile file;
+		public String name;
+		public String pkeyField;
+		public IndieRecord (DbFile file, String name, String pkeyField){
+			this.file = file;
+			this.name = name;
+			this.pkeyField = pkeyField;
+		}
+	}
+	HashMap idToTable;
+	HashMap nameToId;
     /**
      * Constructor.
      * Creates a new, empty catalog.
      */
     public Catalog() {
         // some code goes here
+    	idToTable = new HashMap();
+    	nameToId = new HashMap();
     }
 
     /**
@@ -38,6 +51,10 @@ public class Catalog {
      */
     public void addTable(DbFile file, String name, String pkeyField) {
         // some code goes here
+    	IndieRecord newTable = new IndieRecord(file, name, pkeyField);
+    	int tableId = file.getId();
+    	idToTable.put(tableId, newTable);
+    	nameToId.put(name, tableId);
     }
 
     public void addTable(DbFile file, String name) {
@@ -63,7 +80,12 @@ public class Catalog {
      */
     public int getTableId(String name) throws NoSuchElementException {
         // some code goes here
-        return 0;
+        if (nameToId.get(name) == null){
+        	throw new NoSuchElementException();
+        }else{
+        	int tableId = (int) nameToId.get(name);
+        	return tableId;
+        }
     }
 
     /**
@@ -75,7 +97,13 @@ public class Catalog {
      */
     public TupleDesc getTupleDesc(int tableid) throws NoSuchElementException {
         // some code goes here
-        return null;
+    	IndieRecord record = (IndieRecord) idToTable.get(tableid);
+    	TupleDesc schema = (TupleDesc) record.file.getTupleDesc();
+    	if (schema == null){
+    		throw new NoSuchElementException();
+    	}else{
+    		return schema;
+    	}
     }
 
     /**
@@ -87,12 +115,20 @@ public class Catalog {
      */
     public DbFile getDatabaseFile(int tableid) throws NoSuchElementException {
         // some code goes here
-        return null;
+    	IndieRecord record = (IndieRecord) idToTable.get(tableid);
+    	DbFile table = record.file;
+    	if (table == null){
+    		throw new NoSuchElementException();
+    	}else{
+    		return table;
+    	}
     }
 
     public String getPrimaryKey(int tableid) {
         // some code goes here
-        return null;
+    	IndieRecord record = (IndieRecord) idToTable.get(tableid);
+    	String pkey = record.pkeyField;
+    	return pkey;
     }
 
     public Iterator<Integer> tableIdIterator() {
@@ -102,7 +138,9 @@ public class Catalog {
 
     public String getTableName(int id) {
         // some code goes here
-        return null;
+    	IndieRecord record = (IndieRecord) idToTable.get(id);
+    	String name = record.name;
+    	return name;
     }
 
     /**
@@ -110,6 +148,8 @@ public class Catalog {
      */
     public void clear() {
         // some code goes here
+    	idToTable.clear();
+    	nameToId.clear();
     }
 
     /**
