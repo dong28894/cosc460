@@ -27,16 +27,16 @@ public class Catalog {
 			this.pkeyField = pkeyField;
 		}
 	}
-	HashMap idToTable;
-	HashMap nameToId;
+	HashMap<Integer, IndieRecord> idToTable;
+	HashMap<String, Integer> nameToId;
     /**
      * Constructor.
      * Creates a new, empty catalog.
      */
     public Catalog() {
         // some code goes here
-    	idToTable = new HashMap();
-    	nameToId = new HashMap();
+    	idToTable = new HashMap<Integer, IndieRecord>();
+    	nameToId = new HashMap<String, Integer>();
     }
 
     /**
@@ -83,7 +83,7 @@ public class Catalog {
         if (nameToId.get(name) == null){
         	throw new NoSuchElementException();
         }else{
-        	int tableId = (int) nameToId.get(name);
+        	int tableId = nameToId.get(name).intValue();
         	return tableId;
         }
     }
@@ -97,7 +97,7 @@ public class Catalog {
      */
     public TupleDesc getTupleDesc(int tableid) throws NoSuchElementException {
         // some code goes here
-    	IndieRecord record = (IndieRecord) idToTable.get(tableid);
+    	IndieRecord record = (IndieRecord) idToTable.get(new Integer(tableid));
     	TupleDesc schema = (TupleDesc) record.file.getTupleDesc();
     	if (schema == null){
     		throw new NoSuchElementException();
@@ -115,7 +115,7 @@ public class Catalog {
      */
     public DbFile getDatabaseFile(int tableid) throws NoSuchElementException {
         // some code goes here
-    	IndieRecord record = (IndieRecord) idToTable.get(tableid);
+    	IndieRecord record = (IndieRecord) idToTable.get(new Integer(tableid));
     	DbFile table = record.file;
     	if (table == null){
     		throw new NoSuchElementException();
@@ -126,7 +126,7 @@ public class Catalog {
 
     public String getPrimaryKey(int tableid) {
         // some code goes here
-    	IndieRecord record = (IndieRecord) idToTable.get(tableid);
+    	IndieRecord record = (IndieRecord) idToTable.get(new Integer(tableid));
     	String pkey = record.pkeyField;
     	return pkey;
     }
@@ -138,7 +138,7 @@ public class Catalog {
 
     public String getTableName(int id) {
         // some code goes here
-    	IndieRecord record = (IndieRecord) idToTable.get(id);
+    	IndieRecord record = (IndieRecord) idToTable.get(new Integer(id));
     	String name = record.name;
     	return name;
     }
