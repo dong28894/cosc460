@@ -16,42 +16,61 @@ import java.util.*;
 public class HeapFile implements DbFile {
 	class HeapFileIterator implements DbFileIterator{
 		private int pageIndex;
-		TransactionId tid;
-		HeapPage currPage;
-		Iterator<Tuple> currPageIter;
+		private boolean open;
+		private TransactionId tid;
+		private HeapPage currPage;
+		private Iterator<Tuple> currPageIter;
 		public HeapFileIterator(TransactionId tid){			
 			this.tid = tid;
-		}
-		public void open(){
 			pageIndex = 0;
-			HeapPageId pid = new HeapPageId(getId(), pageIndex);
-			currPage = (HeapPage) readPage(pid);
+			open = false;
+			try {
+				currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
+			} catch (TransactionAbortedException | DbException e) {
+				e.printStackTrace();
+			}
 			currPageIter = currPage.iterator();
 		}
+		public void open(){
+			open = true;
+		}
 		public void close(){
-			pageIndex = 0;
-			tid = null;
-			currPage = null;
-			currPageIter = null;
+			open = false;
 		}
 		public boolean hasNext(){
-			if (pageIndex < numPages()){
-				return true;
+			if (open){
+				if (currPageIter.hasNext() | (pageIndex < (numPages() - 1))){
+					return true;
+				}else{
+					return false;
+				}
 			}
 			return false;
 		}
 		public Tuple next(){
-			if (currPageIter.hasNext()){
+			if (open & currPageIter.hasNext()){
+				return currPageIter.next();
+			}else if (hasNext()){
+				pageIndex++;
+				try {
+					currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
+				} catch (TransactionAbortedException | DbException e) {
+					e.printStackTrace();
+				}
+				currPageIter = currPage.iterator();
 				return currPageIter.next();
 			}else{
-				pageIndex++;
-				open();
-				return currPageIter.next();
+				throw new NoSuchElementException();
 			}
 		}
 		public void rewind(){
 			pageIndex = 0;
-			open();
+			try {
+				currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
+			} catch (TransactionAbortedException | DbException e) {
+				e.printStackTrace();
+			}
+			currPageIter = currPage.iterator();
 		}
 	}
 	File f;
