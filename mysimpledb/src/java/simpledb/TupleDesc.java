@@ -122,9 +122,12 @@ public class TupleDesc implements Serializable {
      */
     public int fieldNameToIndex(String name) throws NoSuchElementException {
         // some code goes here
+    	if (name == null){
+    		throw new NoSuchElementException();
+    	}
         for (int i = 0; i < schema.length; i++){
-        	String tempName = schema[i].fieldName;
-        	if (tempName.equals(name)){
+        	String tempName = this.getFieldName(i);
+        	if (name.equals(tempName)){
         		return i;
         	}
         }
@@ -154,7 +157,7 @@ public class TupleDesc implements Serializable {
      */
     public static TupleDesc merge(TupleDesc td1, TupleDesc td2) {
         // some code goes here
-    	int newNumFields = td1.numFields()+td2.numFields();
+    	int newNumFields = td1.numFields()+td2.numFields();    	
     	String[] newNameFields = new String[newNumFields];
     	Type[] newTypeFields = new Type[newNumFields];
     	for (int i = 0; i < td1.numFields(); i++){
@@ -162,8 +165,8 @@ public class TupleDesc implements Serializable {
     		newTypeFields[i] = td1.getFieldType(i);
     	}
     	for (int i = 0; i < td2.numFields(); i++){
-    		newNameFields[td1.numFields() + i] = td1.getFieldName(i);
-    		newTypeFields[td1.numFields() + i] = td1.getFieldType(i);
+    		newNameFields[td1.numFields() + i] = td2.getFieldName(i);
+    		newTypeFields[td1.numFields() + i] = td2.getFieldType(i);
     	}
         TupleDesc newSchema = new TupleDesc(newTypeFields, newNameFields);
         return newSchema;
@@ -225,7 +228,7 @@ public class TupleDesc implements Serializable {
      */
     public Iterator<TDItem> iterator() {
         // some code goes here
-        List iter = Arrays.asList(schema);
+        List<TDItem> iter = Arrays.asList(schema);
         return iter.iterator();
     }
 

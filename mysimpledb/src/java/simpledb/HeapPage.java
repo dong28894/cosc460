@@ -11,6 +11,38 @@ import java.io.*;
  * @see BufferPool
  */
 public class HeapPage implements Page {
+	class PageIterator implements Iterator<Tuple>{
+		private int index;
+		private int count;
+		public PageIterator(){
+			index = 0;
+			count = 0;
+		}
+		public boolean hasNext(){
+			if (count < (getNumTuples()-getNumEmptySlots())){
+				return true;
+			}
+			return false;
+		}
+		public void remove(){
+			throw new UnsupportedOperationException("Cannot remove tuples this way!");
+		}
+		public Tuple next(){
+			if (hasNext()){
+				while (true){
+					if (isSlotUsed(index)){
+						Tuple currTuple = tuples[index];
+						index++;
+						count++;
+						return currTuple;
+					}else{
+						index++;
+					}
+				}				
+			}
+			throw new NoSuchElementException();
+		}
+	}
 
     final HeapPageId pid;
     final TupleDesc td;
@@ -325,7 +357,7 @@ public class HeapPage implements Page {
      */
     public Iterator<Tuple> iterator() {
         // some code goes here
-        return null;
+        return new PageIterator();
     }
 
 }

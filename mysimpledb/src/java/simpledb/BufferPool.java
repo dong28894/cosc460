@@ -28,7 +28,7 @@ public class BufferPool {
      * constructor instead.
      */
     public static final int DEFAULT_PAGES = 50;
-    HashMap pool;
+    HashMap<PageId, Page> pool;
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -37,7 +37,7 @@ public class BufferPool {
      */
     public BufferPool(int numPages) {
         // some code goes here
-    	pool = new HashMap(numPages);
+    	pool = new HashMap<PageId, Page>(numPages);
     }
 
     public static int getPageSize() {
