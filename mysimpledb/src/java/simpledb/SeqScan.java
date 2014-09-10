@@ -12,6 +12,8 @@ public class SeqScan implements DbIterator {
     private static final long serialVersionUID = 1L;
     int tableid;
     String tableAlias;
+    DbFileIterator iter;
+    Catalog cat;
 
     /**
      * Creates a sequential scan over the specified table as a part of the
@@ -30,6 +32,9 @@ public class SeqScan implements DbIterator {
         // some code goes here
     	this.tableid = tableid;
     	this.tableAlias = tableAlias;
+    	cat = Database.getCatalog();
+    	DbFile f = cat.getDatabaseFile(tableid);
+    	iter = f.iterator(tid);
     }
 
     /**
@@ -56,6 +61,7 @@ public class SeqScan implements DbIterator {
 
     public void open() throws DbException, TransactionAbortedException {
         // some code goes here
+    	iter.open();
     }
 
     /**
@@ -69,27 +75,35 @@ public class SeqScan implements DbIterator {
      */
     public TupleDesc getTupleDesc() {
         // some code goes here
-    	Catalog currCatalog = Database.getCatalog();
-        return currCatalog.getTupleDesc(tableid);
+        TupleDesc schema = cat.getTupleDesc(tableid);
+        String[] newFieldNames = new String[schema.numFields()];
+        Type[] newTypes = new Type[schema.numFields()];
+        for (int i = 0; i < schema.numFields(); i++){
+        	newFieldNames[i] = getAlias() + "." + schema.getFieldName(i);
+        	newTypes[i] = schema.getFieldType(i);
+        }
+        return new TupleDesc(newTypes, newFieldNames);
     }
 
     public boolean hasNext() throws TransactionAbortedException, DbException {
         // some code goes here
-        return false;
+        return iter.hasNext();
     }
 
     public Tuple next() throws NoSuchElementException,
             TransactionAbortedException, DbException {
         // some code goes here
-        return null;
+        return iter.next();
     }
 
     public void close() {
         // some code goes here
+    	iter.close();
     }
 
     public void rewind() throws DbException, NoSuchElementException,
             TransactionAbortedException {
         // some code goes here
+    	iter.rewind();
     }
 }

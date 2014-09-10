@@ -39,7 +39,7 @@ public class HeapFile implements DbFile {
 		}
 		public boolean hasNext(){
 			if (open){
-				if (currPageIter.hasNext() | (pageIndex < (numPages() - 1))){
+				if (currPageIter.hasNext() || (pageIndex < (numPages() - 1))){
 					return true;
 				}else{
 					return false;
@@ -48,20 +48,22 @@ public class HeapFile implements DbFile {
 			return false;
 		}
 		public Tuple next(){
-			if (open & currPageIter.hasNext()){
-				return currPageIter.next();
-			}else if (hasNext()){
-				pageIndex++;
-				try {
-					currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
-				} catch (TransactionAbortedException | DbException e) {
-					e.printStackTrace();
+			if (open){
+				if (currPageIter.hasNext()){			
+					return currPageIter.next();
+				}else if (pageIndex < (numPages() - 1)){
+					pageIndex++;					
+					try {
+						currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
+					} catch (TransactionAbortedException | DbException e) {
+						e.printStackTrace();
+					}
+					currPageIter = currPage.iterator();
+					return currPageIter.next();
 				}
-				currPageIter = currPage.iterator();
-				return currPageIter.next();
-			}else{
-				throw new NoSuchElementException();
 			}
+			throw new NoSuchElementException();
+			
 		}
 		public void rewind(){
 			pageIndex = 0;
@@ -135,9 +137,11 @@ public class HeapFile implements DbFile {
 			return null;
 		}    	
         try {
-			data.skip((pid.pageNumber()-1)*BufferPool.getPageSize());
+        	System.out.println("file size:" + data.available());
+			data.skip(pid.pageNumber()*BufferPool.getPageSize());
 	        data.read(pageData);
 	        returnedPage = new HeapPage((HeapPageId) pid, pageData);
+	        System.out.println("size after skip: " + data.available());
 	        data.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -157,7 +161,7 @@ public class HeapFile implements DbFile {
      */
     public int numPages() {
         // some code goes here
-        return (int) Math.floor(f.getAbsoluteFile().length()/BufferPool.getPageSize());
+        return (int) Math.floor(f.length()/BufferPool.getPageSize());
     }
 
     // see DbFile.java for javadocs

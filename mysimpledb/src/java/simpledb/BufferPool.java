@@ -28,7 +28,7 @@ public class BufferPool {
      * constructor instead.
      */
     public static final int DEFAULT_PAGES = 50;
-    HashMap<PageId, Page> pool;
+    private HashMap<PageId, Page> pool;
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -73,6 +73,7 @@ public class BufferPool {
         	Catalog currentCatalog = Database.getCatalog();
         	DbFile file = currentCatalog.getDatabaseFile(tableId);
         	currentPage = file.readPage(pid);
+        	pool.put(pid, currentPage);
         }
         return currentPage;        
     }
