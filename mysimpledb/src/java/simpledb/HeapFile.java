@@ -26,7 +26,9 @@ public class HeapFile implements DbFile {
 			open = false;
 			try {
 				currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
-			} catch (TransactionAbortedException | DbException e) {
+			} catch (TransactionAbortedException e) {
+				e.printStackTrace();
+			} catch (DbException e){
 				e.printStackTrace();
 			}
 			currPageIter = currPage.iterator();
@@ -39,23 +41,23 @@ public class HeapFile implements DbFile {
 		}
 		public boolean hasNext(){
 			if (open){
-				if (currPageIter.hasNext() || (pageIndex < (numPages() - 1))){
+				if (currPageIter.hasNext() | (pageIndex < (numPages() - 1))){
 					return true;
-				}else{
-					return false;
 				}
 			}
 			return false;
 		}
 		public Tuple next(){
 			if (open){
-				if (currPageIter.hasNext()){			
+				if (currPageIter.hasNext()){
 					return currPageIter.next();
 				}else if (pageIndex < (numPages() - 1)){
-					pageIndex++;					
+					pageIndex++;
 					try {
 						currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
-					} catch (TransactionAbortedException | DbException e) {
+					} catch (TransactionAbortedException e) {
+						e.printStackTrace();
+					} catch (DbException e){
 						e.printStackTrace();
 					}
 					currPageIter = currPage.iterator();
@@ -69,7 +71,9 @@ public class HeapFile implements DbFile {
 			pageIndex = 0;
 			try {
 				currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
-			} catch (TransactionAbortedException | DbException e) {
+			} catch (TransactionAbortedException e) {
+				e.printStackTrace();
+			} catch (DbException e){
 				e.printStackTrace();
 			}
 			currPageIter = currPage.iterator();
@@ -137,11 +141,9 @@ public class HeapFile implements DbFile {
 			return null;
 		}    	
         try {
-        	System.out.println("file size:" + data.available());
 			data.skip(pid.pageNumber()*BufferPool.getPageSize());
 	        data.read(pageData);
 	        returnedPage = new HeapPage((HeapPageId) pid, pageData);
-	        System.out.println("size after skip: " + data.available());
 	        data.close();
 		} catch (IOException e) {
 			e.printStackTrace();

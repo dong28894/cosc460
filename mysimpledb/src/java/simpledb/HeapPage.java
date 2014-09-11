@@ -320,12 +320,14 @@ public class HeapPage implements Page {
     public int getNumEmptySlots() {
         // some code goes here
     	int count = 0;
+    	int countedSlots = 0;
         for (int i = 0; i < header.length; i++){
         	byte curr = header[i];
-        	for (int j = 7; j >= 0; j--){
-        		if (((curr >>> j) ^ 1) == 1){
+        	for (int j = 0; j < 8; j++){
+        		if (!((curr & (1 << j)) != 0) & (countedSlots < numSlots)){
         			count++;
         		}
+        		countedSlots++;
         	}
         }
         return count;
