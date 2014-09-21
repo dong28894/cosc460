@@ -1,6 +1,7 @@
 package simpledb;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -29,6 +30,8 @@ public class BufferPool {
      */
     public static final int DEFAULT_PAGES = 50;
     private HashMap<PageId, Page> pool;
+    private HashMap<PageId, Long> accessTime;
+    int numPages;
 
     /**
      * Creates a BufferPool that caches up to numPages pages.
@@ -37,7 +40,9 @@ public class BufferPool {
      */
     public BufferPool(int numPages) {
         // some code goes here
-    	pool = new HashMap<PageId, Page>(numPages);
+    	pool = new HashMap<PageId, Page>();
+    	accessTime = new HashMap<PageId, Long>();
+    	this.numPages = numPages;
     }
 
     public static int getPageSize() {
@@ -69,12 +74,16 @@ public class BufferPool {
         // some code goes here
         Page currentPage = (Page) pool.get(pid);
         if (currentPage == null){
+        	if (pool.size() == numPages){
+        		evictPage();
+        	}
         	int tableId = pid.getTableId();
         	Catalog currentCatalog = Database.getCatalog();
         	DbFile file = currentCatalog.getDatabaseFile(tableId);
         	currentPage = file.readPage(pid);
         	pool.put(pid, currentPage);
         }
+        accessTime.put(pid, System.currentTimeMillis());
         return currentPage;        
     }
 
@@ -142,6 +151,9 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
+    	DbFile currFile = Database.getCatalog().getDatabaseFile(tableId);
+    	ArrayList<Page> modPg = currFile.insertTuple(tid, t);
+    	modPg.get(0).markDirty(true, tid);
     }
 
     /**
@@ -160,6 +172,9 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
+    	HeapPage currPage = (HeapPage) getPage(tid, t.getRecordId().getPageId(), Permissions.READ_WRITE);
+    	currPage.deleteTuple(t);
+    	currPage.markDirty(true, tid);
     }
 
     /**
@@ -170,7 +185,9 @@ public class BufferPool {
     public synchronized void flushAllPages() throws IOException {
         // some code goes here
         // not necessary for lab1
-
+    	for (PageId pid : pool.keySet()){	
+    		flushPage(pid);    		
+    	}
     }
 
     /**
@@ -192,6 +209,14 @@ public class BufferPool {
     private synchronized void flushPage(PageId pid) throws IOException {
         // some code goes here
         // not necessary for lab1
+    	Page pg = pool.get(pid);
+    	if (pg.isDirty() != null){
+    	    int tableId = pid.getTableId();
+    	    Catalog currentCatalog = Database.getCatalog();
+    	    DbFile file = currentCatalog.getDatabaseFile(tableId);    	
+    	    file.writePage(pg);
+    	    pg.markDirty(false, pg.isDirty()); 
+    	}
     }
 
     /**
@@ -209,6 +234,21 @@ public class BufferPool {
     private synchronized void evictPage() throws DbException {
         // some code goes here
         // not necessary for lab1
+    	PageId oldestPage = null;
+    	Long oldestTime = null;
+    	for (PageId currPage : accessTime.keySet()){
+    		if ((oldestTime == null) || (accessTime.get(currPage) < oldestTime)){
+    			oldestPage = currPage;
+    			oldestTime = accessTime.get(currPage);
+    		}
+    	}
+    	try {
+			flushPage(oldestPage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	pool.remove(oldestPage);
+    	accessTime.remove(oldestPage);
     }
 
 }

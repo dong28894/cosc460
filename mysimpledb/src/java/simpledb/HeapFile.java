@@ -156,6 +156,10 @@ public class HeapFile implements DbFile {
     public void writePage(Page page) throws IOException {
         // some code goes here
         // not necessary for lab1
+    	RandomAccessFile file = new RandomAccessFile(f, "rw");
+    	file.seek(page.getId().pageNumber()*BufferPool.getPageSize());
+    	file.write(page.getPageData());
+    	file.close();
     }
 
     /**
@@ -170,7 +174,27 @@ public class HeapFile implements DbFile {
     public ArrayList<Page> insertTuple(TransactionId tid, Tuple t)
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
-        return null;
+    	HeapPage currPage;
+    	for (int i = 0; i < numPages(); i++){
+    		currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), i), Permissions.READ_ONLY);
+    		if (currPage.getNumEmptySlots() != 0){
+    			currPage.insertTuple(t);   
+    			ArrayList<Page> modPg = new ArrayList<Page>();
+    		    modPg.add(currPage);
+    		    return modPg;
+    		}
+    	}
+        byte[] newPageData = HeapPage.createEmptyPageData();
+        currPage = new HeapPage(new HeapPageId(getId(), numPages()), newPageData);
+        currPage.insertTuple(t);
+        newPageData = currPage.getPageData();
+        BufferedOutputStream file = new BufferedOutputStream(new FileOutputStream(f, true));
+        file.write(newPageData);
+        file.flush();
+        file.close();
+        ArrayList<Page> modPg = new ArrayList<Page>();
+	    modPg.add(currPage);
+	    return modPg;
         // not necessary for lab1
     }
 
@@ -178,8 +202,16 @@ public class HeapFile implements DbFile {
     public ArrayList<Page> deleteTuple(TransactionId tid, Tuple t) throws DbException,
             TransactionAbortedException {
         // some code goes here
-        return null;
-        // not necessary for lab1
+    	if (t.getRecordId() != null){
+    	    PageId pid = t.getRecordId().getPageId();
+    	    BufferPool pool = Database.getBufferPool();
+    	    HeapPage pg = (HeapPage) pool.getPage(tid, pid, Permissions.READ_WRITE);
+    	    pg.deleteTuple(t);
+    	    ArrayList<Page> modPg = new ArrayList<Page>();
+    	    modPg.add(pg);
+    	    return modPg;
+    	}
+    	throw new DbException("Tuple is not in database.");                
     }
 
     // see DbFile.java for javadocs
