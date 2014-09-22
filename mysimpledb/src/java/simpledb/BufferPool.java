@@ -172,9 +172,9 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
-    	HeapPage currPage = (HeapPage) getPage(tid, t.getRecordId().getPageId(), Permissions.READ_WRITE);
-    	currPage.deleteTuple(t);
-    	currPage.markDirty(true, tid);
+    	DbFile currFile = Database.getCatalog().getDatabaseFile(t.getRecordId().getPageId().getTableId());
+    	ArrayList<Page> modPg = currFile.deleteTuple(tid, t);
+    	modPg.get(0).markDirty(true, tid);
     }
 
     /**
