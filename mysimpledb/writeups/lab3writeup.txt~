@@ -1,0 +1,68 @@
+Report for Lab 3
+----------------
+
+Answer the questions from the lab description here.  Questions 8 and 9 do not require answers.
+
+1. Classes that implement DbIterator interface: Aggregate, Delete, Filter, HashEquiJoin, Insert, Join, Operator, OrderBy, Project, SeqScan, TupleIterator
+
+2. Subclasses of the class Operator: Aggregate, Delete, Filter, HashEquiJoin, Insert, Join, OrderBy, Project
+
+3. Select is supported by Filter class.
+   Join is supported by HashEquiJoin class and Join class.
+   Projection is supported by Project class.
+
+4. Because Filter is a subclass of Operator and it inherits the methods next and hasNext from Operator.
+
+5. 
+while iterR.hasNext():
+   t = iterR.next()
+   if t matches predicate:
+       return t
+return null
+
+6.
+list = []
+while iterR.hasNext():
+    t1 = iterR.next()
+    while iterS.hasNext():
+        t2 = iterS.next()
+        if t1 and t2 match join predicate:
+	    tNew = merge(t1, t2)   
+            list.append( tNew )
+    iterS.rewind()
+return list
+
+7.
+while iterR.hasNext() or iterS.hasNext():
+    if not iterS.hasNext():
+        t1 = iterR.next()
+        iterS.rewind()
+    while iterS.hasNext():
+        t2 = iterS.next()
+        if t1 and t2 match join predicate:
+	    tNew = merge(t1, t2)
+            return tNew    
+return null
+
+After you complete lab 3, please answer the following questions.  
+
+1. What is your name?  If you work with a partner, be sure to write both of your names.
+
+<Replace this text with your answer>
+
+2. What did you think of this assignment?
+
+<Replace this text with your answer>
+
+3. What was the hardest part of this assignment?
+
+<Replace this text with your answer>
+
+4. Describe any missing or incomplete elements of your code.
+
+<Replace this text with your answer>
+
+5. Roughly how long did you spend working on this lab?
+
+<Replace this text with your answer>
+
