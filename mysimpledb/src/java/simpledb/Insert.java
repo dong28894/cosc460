@@ -1,5 +1,8 @@
 package simpledb;
 
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
 /**
  * Inserts tuples read from the child operator into the tableid specified in the
  * constructor
@@ -7,6 +10,11 @@ package simpledb;
 public class Insert extends Operator {
 
     private static final long serialVersionUID = 1L;
+    TransactionId t;
+    DbIterator child;
+    int tableid;
+    int fetchCall = 0;
+    Tuple returnedTup;
 
     /**
      * Constructor.
@@ -20,23 +28,39 @@ public class Insert extends Operator {
     public Insert(TransactionId t, DbIterator child, int tableid)
             throws DbException {
         // some code goes here
+    	if (child.getTupleDesc().equals(Database.getCatalog().getTupleDesc(tableid))){
+    		this.t = t;
+    		this.child = child;
+    		this.tableid = tableid;
+    		Type[] typeArr = {Type.INT_TYPE};
+    		String[] fieldArr = {""};
+    		TupleDesc schema = new TupleDesc(typeArr, fieldArr);
+    		returnedTup = new Tuple(schema);
+    	}else{
+    		throw new DbException("TupleDesc of the child and the table differ");
+    	}
     }
 
     public TupleDesc getTupleDesc() {
         // some code goes here
-        return null;
+        return returnedTup.getTupleDesc();
     }
 
     public void open() throws DbException, TransactionAbortedException {
         // some code goes here
+    	super.open();
+    	child.open();
     }
 
     public void close() {
         // some code goes here
+    	super.close();
+    	child.close();
     }
 
     public void rewind() throws DbException, TransactionAbortedException {
         // some code goes here
+    	child.rewind();
     }
 
     /**
@@ -54,17 +78,39 @@ public class Insert extends Operator {
      */
     protected Tuple fetchNext() throws TransactionAbortedException, DbException {
         // some code goes here
-        return null;
+    	if (fetchCall != 0){
+    		fetchCall++;
+    		return null;
+    	}else{
+    		fetchCall++;
+    		int count = 0;
+    		BufferPool pool = Database.getBufferPool();
+    		while (child.hasNext()){
+    			try {
+					pool.insertTuple(t, tableid, child.next());
+				} catch (NoSuchElementException e) {
+					e.printStackTrace();
+					throw new DbException("No such element");
+				} catch (IOException e) {
+					e.printStackTrace();
+					throw new DbException("IOException");
+				}    			
+    			count++;
+    		}    		
+    		returnedTup.setField(0, new IntField(count));
+    		return returnedTup;
+    	}
     }
 
     @Override
     public DbIterator[] getChildren() {
         // some code goes here
-        return null;
+        return new DbIterator[]{child};
     }
 
     @Override
     public void setChildren(DbIterator[] children) {
         // some code goes here
+    	child = children[0];
     }
 }

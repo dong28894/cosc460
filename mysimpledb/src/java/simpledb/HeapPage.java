@@ -14,12 +14,14 @@ public class HeapPage implements Page {
 	class PageIterator implements Iterator<Tuple>{
 		private int index;
 		private int count;
+		private int numTups;
 		public PageIterator(){
 			index = 0;
 			count = 0;
+			numTups = getNumTuples()-getNumEmptySlots();
 		}
 		public boolean hasNext(){
-			if (count < (getNumTuples()-getNumEmptySlots())){
+			if (count < numTups){
 				return true;
 			}
 			return false;

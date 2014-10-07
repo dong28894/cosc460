@@ -1,6 +1,7 @@
 package simpledb;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Lab3Main {
 
@@ -11,25 +12,34 @@ public class Lab3Main {
         // file named college.schema must be in mysimpledb directory
         Database.getCatalog().loadSchema("college.schema");
 
-        // SQL query: SELECT * FROM STUDENTS WHERE name="Alice"
-        // algebra translation: select_{name="alice"}( Students )
-        // query plan: a tree with the following structure
-        // - a Filter operator is the root; filter keeps only those w/ name=Alice
-        // - a SeqScan operator on Students at the child of root
         TransactionId tid = new TransactionId();
+        //Scan students(S) table
         SeqScan scanStudents = new SeqScan(tid, Database.getCatalog().getTableId("students"));
-        SeqScan scanTakes = new SeqScan(tid, Database.getCatalog().getTableId("takes"));        
-        JoinPredicate p = new JoinPredicate(0, Predicate.Op.EQUALS, 0);
-        Join students = new Join(p, scanTakes, scanStudents);
+        //Scan takes(T) table
+        SeqScan scanTakes = new SeqScan(tid, Database.getCatalog().getTableId("takes"));
+        //Scan profs(P) table
+        SeqScan scanProfs = new SeqScan(tid, Database.getCatalog().getTableId("profs"));
+        //P.name = "hay"
+        Filter profHay = new Filter(new Predicate(1, Predicate.Op.EQUALS, new StringField("hay", 12)), scanProfs);
+        //T.cid = P.favoriteCourse
+        JoinPredicate p1 = new JoinPredicate(1, Predicate.Op.EQUALS, 2);
+        Join profTake = new Join(p1, scanTakes, profHay);
+        //S.sid = T.sid
+        JoinPredicate p2 = new JoinPredicate(0, Predicate.Op.EQUALS, 0);
+        Join studentTake = new Join(p2, scanStudents, profTake);
+        //Project S.name
+        ArrayList<Integer> fieldList = new ArrayList<Integer>();
+        fieldList.add(new Integer(1));
+        Project result = new Project(fieldList, new Type[]{Type.STRING_TYPE}, studentTake);
 
         // query execution: we open the iterator of the root and iterate through results
         System.out.println("Query results:");
-        students.open();
-        while (students.hasNext()) {
-            Tuple tup = students.next();
+        result.open();
+        while (result.hasNext()) {
+            Tuple tup = result.next();
             System.out.println("\t"+tup);
         }
-        students.close();
+        result.close();
         Database.getBufferPool().transactionComplete(tid);
     }
 

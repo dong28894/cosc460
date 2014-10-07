@@ -15,12 +15,12 @@
 <coolItem id="org.eclipse.debug.ui.main.toolbar" itemType="typeToolBarContribution" x="36" y="26"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="80" y="26"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="80" y="26"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="114" y="26"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="62" y="26"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="212" y="26"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditorNoSource" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -29,31 +29,10 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-<part id="3"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Lab3Main.java" partName="Lab3Main.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/Lab3Main.java" title="Lab3Main.java" tooltip="mysimpledb/src/java/simpledb/Lab3Main.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/Lab3Main.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1461" selectionTopPixel="253"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Join.java" partName="Join.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/Join.java" title="Join.java" tooltip="mysimpledb/src/java/simpledb/Join.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/Join.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="17" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JoinPredicate.java" partName="JoinPredicate.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/JoinPredicate.java" title="JoinPredicate.java" tooltip="mysimpledb/src/java/simpledb/JoinPredicate.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/JoinPredicate.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="6" selectionOffset="1295" selectionTopPixel="510"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tuple.java" partName="Tuple.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/Tuple.java" title="Tuple.java" tooltip="mysimpledb/src/java/simpledb/Tuple.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/Tuple.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="5" selectionOffset="698" selectionTopPixel="151"/>
-</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -308,168 +287,7 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Filter.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Operator.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Lab3Main.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Join.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/JoinPredicate.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/test/simpledb/JoinTest.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Tuple.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/TupleDesc.java"/>
-</editors>
-<item historyLabel="Filter.java" index="0">
-<position/>
-</item>
-<item historyLabel="Operator.java" index="1">
-<position info="not_deleted" x="2008" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position/>
-</item>
-<item historyLabel="Operator.java" index="1">
-<position info="not_deleted" x="2008" y="0"/>
-</item>
-<item historyLabel="Lab3Main.java" index="2">
-<position info="not_deleted" x="1461" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position info="not_deleted" x="1826" y="0"/>
-</item>
-<item historyLabel="Lab3Main.java" index="2">
-<position info="not_deleted" x="1461" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position info="not_deleted" x="1826" y="0"/>
-</item>
-<item historyLabel="Lab3Main.java" index="2">
-<position info="not_deleted" x="1461" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position info="not_deleted" x="1826" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position info="not_deleted" x="1084" y="0"/>
-</item>
-<item historyLabel="Lab3Main.java" index="2">
-<position info="not_deleted" x="1461" y="0"/>
-</item>
-<item historyLabel="Filter.java" index="0">
-<position info="not_deleted" x="1826" y="0"/>
-</item>
-<item historyLabel="Lab3Main.java" index="2">
-<position info="not_deleted" x="1461" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="797" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="1422" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="1421" y="0"/>
-</item>
-<item historyLabel="JoinTest.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="1148" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="1148" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="1834" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="1790" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="1916" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3550" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="1066" y="0"/>
-</item>
-<item historyLabel="JoinPredicate.java" index="4">
-<position info="not_deleted" x="1295" y="6"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3575" y="0"/>
-</item>
-<item historyLabel="Tuple.java" index="6">
-<position info="not_deleted" x="826" y="0"/>
-</item>
-<item historyLabel="TupleDesc.java" index="7">
-<position/>
-</item>
-<item historyLabel="TupleDesc.java" index="7">
-<position/>
-</item>
-<item historyLabel="Tuple.java" index="6">
-<position info="not_deleted" x="826" y="0"/>
-</item>
-<item historyLabel="Tuple.java" index="6">
-<position info="not_deleted" x="698" y="5"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3575" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3606" y="0"/>
-</item>
-<item historyLabel="Tuple.java" index="6">
-<position info="not_deleted" x="698" y="5"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3779" y="0"/>
-</item>
-<item historyLabel="TupleDesc.java" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="TupleDesc.java" index="7">
-<position info="not_deleted" x="2154" y="9"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3779" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3828" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="3956" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="4173" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="4201" y="0"/>
-</item>
-<item historyLabel="Join.java" index="3">
-<position info="not_deleted" x="4374" y="0"/>
-</item>
-<item active="true" historyLabel="Join.java" index="3">
-<position info="not_deleted" x="4401" y="0"/>
-</item>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -486,50 +304,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TupleDesc.java" tooltip="mysimpledb/src/java/simpledb/TupleDesc.java">
-<persistable path="/mysimpledb/src/java/simpledb/TupleDesc.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Delete.java" tooltip="mysimpledb/src/java/simpledb/Delete.java">
+<persistable path="/mysimpledb/src/java/simpledb/Delete.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Tuple.java" tooltip="mysimpledb/src/java/simpledb/Tuple.java">
-<persistable path="/mysimpledb/src/java/simpledb/Tuple.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DbFileIterator.java" tooltip="mysimpledb/src/java/simpledb/DbFileIterator.java">
+<persistable path="/mysimpledb/src/java/simpledb/DbFileIterator.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JoinTest.java" tooltip="mysimpledb/test/simpledb/JoinTest.java">
-<persistable path="/mysimpledb/test/simpledb/JoinTest.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SeqScan.java" tooltip="mysimpledb/src/java/simpledb/SeqScan.java">
+<persistable path="/mysimpledb/src/java/simpledb/SeqScan.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JoinPredicate.java" tooltip="mysimpledb/src/java/simpledb/JoinPredicate.java">
-<persistable path="/mysimpledb/src/java/simpledb/JoinPredicate.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Join.java" tooltip="mysimpledb/src/java/simpledb/Join.java">
-<persistable path="/mysimpledb/src/java/simpledb/Join.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Filter.java" tooltip="mysimpledb/src/java/simpledb/Filter.java">
-<persistable path="/mysimpledb/src/java/simpledb/Filter.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Lab3Main.java" tooltip="mysimpledb/src/java/simpledb/Lab3Main.java">
-<persistable path="/mysimpledb/src/java/simpledb/Lab3Main.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Operator.java" tooltip="mysimpledb/src/java/simpledb/Operator.java">
-<persistable path="/mysimpledb/src/java/simpledb/Operator.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FilterBase.java" tooltip="mysimpledb/test/simpledb/systemtest/FilterBase.java">
-<persistable path="/mysimpledb/test/simpledb/systemtest/FilterBase.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FilterTest.java" tooltip="mysimpledb/test/simpledb/FilterTest.java">
-<persistable path="/mysimpledb/test/simpledb/FilterTest.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="PredicateTest.java" tooltip="mysimpledb/test/simpledb/PredicateTest.java">
-<persistable path="/mysimpledb/test/simpledb/PredicateTest.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Field.java" tooltip="mysimpledb/src/java/simpledb/Field.java">
-<persistable path="/mysimpledb/src/java/simpledb/Field.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Predicate.java" tooltip="mysimpledb/src/java/simpledb/Predicate.java">
-<persistable path="/mysimpledb/src/java/simpledb/Predicate.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SystemTestUtil.java" tooltip="mysimpledb/test/simpledb/systemtest/SystemTestUtil.java">
+<persistable path="/mysimpledb/test/simpledb/systemtest/SystemTestUtil.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapPage.java" tooltip="mysimpledb/src/java/simpledb/HeapPage.java">
 <persistable path="/mysimpledb/src/java/simpledb/HeapPage.java"/>
 </file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapFile.java" tooltip="mysimpledb/src/java/simpledb/HeapFile.java">
+<persistable path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BufferPool.java" tooltip="mysimpledb/src/java/simpledb/BufferPool.java">
 <persistable path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Filter.java" tooltip="mysimpledb/src/java/simpledb/Filter.java">
+<persistable path="/mysimpledb/src/java/simpledb/Filter.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleDbTestBase.java" tooltip="mysimpledb/test/simpledb/systemtest/SimpleDbTestBase.java">
+<persistable path="/mysimpledb/test/simpledb/systemtest/SimpleDbTestBase.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FilterBase.java" tooltip="mysimpledb/test/simpledb/systemtest/FilterBase.java">
+<persistable path="/mysimpledb/test/simpledb/systemtest/FilterBase.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Operator.java" tooltip="mysimpledb/src/java/simpledb/Operator.java">
+<persistable path="/mysimpledb/src/java/simpledb/Operator.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="InsertTest.java" tooltip="mysimpledb/test/simpledb/systemtest/InsertTest.java">
+<persistable path="/mysimpledb/test/simpledb/systemtest/InsertTest.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DeleteTest.java" tooltip="mysimpledb/test/simpledb/systemtest/DeleteTest.java">
+<persistable path="/mysimpledb/test/simpledb/systemtest/DeleteTest.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="StringAggregator.java" tooltip="mysimpledb/src/java/simpledb/StringAggregator.java">
+<persistable path="/mysimpledb/src/java/simpledb/StringAggregator.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntegerAggregator.java" tooltip="mysimpledb/src/java/simpledb/IntegerAggregator.java">
+<persistable path="/mysimpledb/src/java/simpledb/IntegerAggregator.java"/>
 </file>
 </mruList>
 </workbench>

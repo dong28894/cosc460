@@ -14,7 +14,7 @@ public class DeleteTest extends FilterBase {
     protected int applyPredicate(HeapFile table, TransactionId tid, Predicate predicate)
             throws DbException, TransactionAbortedException, IOException {
         SeqScan ss = new SeqScan(tid, table.getId(), "");
-        Filter filter = new Filter(predicate, ss);
+        Filter filter = new Filter(predicate, ss);        
         Delete deleteOperator = new Delete(tid, filter);
 //        Query q = new Query(deleteOperator, tid);
 

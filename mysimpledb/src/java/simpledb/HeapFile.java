@@ -41,28 +41,29 @@ public class HeapFile implements DbFile {
 		}
 		public boolean hasNext(){
 			if (open){
-				if (currPageIter.hasNext() | (pageIndex < (numPages() - 1))){
-					return true;
+				while (true){
+					if (currPageIter.hasNext()){
+						return true;
+					}else if (pageIndex < (numPages() - 1)){
+						pageIndex++;
+						try {
+							currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
+						} catch (TransactionAbortedException e) {
+							e.printStackTrace();
+						} catch (DbException e){
+							e.printStackTrace();
+						}
+						currPageIter = currPage.iterator();
+					}else{
+						return false;
+					}
 				}
 			}
 			return false;
 		}
 		public Tuple next(){
-			if (open){
-				if (currPageIter.hasNext()){
-					return currPageIter.next();
-				}else if (pageIndex < (numPages() - 1)){
-					pageIndex++;
-					try {
-						currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), pageIndex), Permissions.READ_ONLY);
-					} catch (TransactionAbortedException e) {
-						e.printStackTrace();
-					} catch (DbException e){
-						e.printStackTrace();
-					}
-					currPageIter = currPage.iterator();
-					return currPageIter.next();
-				}
+			while (hasNext()){
+				return currPageIter.next();				
 			}
 			throw new NoSuchElementException();
 			

@@ -1,11 +1,89 @@
 package simpledb;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
 /**
  * Knows how to compute some aggregate over a set of StringFields.
  */
 public class StringAggregator implements Aggregator {
+	public class StrAggIterator implements DbIterator{
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private boolean open;
+		private TupleDesc schema;
+		private ArrayList<Object> keys;
+		private int index = 0;
+		public StrAggIterator(){
+			open = false;
+			Set<Object> keySet = groups.keySet();
+			keys = new ArrayList<Object>();
+			for (Object o: keySet){
+				keys.add(o);
+			}
+			if (gbfield == NO_GROUPING){
+				schema = new TupleDesc(new Type[]{Type.INT_TYPE}, new String[]{"aggregateValue"});
+			}else{
+				schema = new TupleDesc(new Type[]{gbfieldtype, Type.INT_TYPE}, new String[]{"groupValue","aggregateValue"});
+			}
+		}
+		public void open() {
+			open = true;
+		}
 
+		public boolean hasNext(){
+			if (open){
+				if (index < keys.size()){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public Tuple next() throws NoSuchElementException {
+			if (hasNext()){
+				Tuple tup = new Tuple(schema);
+				Object key = keys.get(index);
+				Integer val = groups.get(key);
+				if (schema.numFields() == 1){
+					IntField f = new IntField(val.intValue());
+					tup.setField(0, f);
+				}else{
+					Field f1 = (Field) key;
+					IntField f2 = new IntField(val.intValue());
+					tup.setField(0, f1);
+					tup.setField(1, f2);
+				}
+				index++;
+				return tup;
+			}
+			throw new NoSuchElementException();
+		}
+
+		public void rewind() {
+			index = 0;			
+		}
+
+		public TupleDesc getTupleDesc() {
+			return schema;
+		}
+
+		public void close() {
+			open = false;
+		}
+		
+	}
     private static final long serialVersionUID = 1L;
+    int gbfield;
+    Type gbfieldtype;
+    int afield;
+    Op what;
+    HashMap<Object, Integer> groups;
+    int count;
 
     /**
      * Aggregate constructor
@@ -19,6 +97,14 @@ public class StringAggregator implements Aggregator {
 
     public StringAggregator(int gbfield, Type gbfieldtype, int afield, Op what) {
         // some code goes here
+    	this.gbfield = gbfield;
+    	this.gbfieldtype = gbfieldtype;
+    	this.afield = afield;
+    	this.what = what;
+    	groups = new HashMap<Object, Integer>();
+    	if (what != Op.COUNT){
+    		throw new IllegalArgumentException();
+    	}
     }
 
     /**
@@ -28,6 +114,16 @@ public class StringAggregator implements Aggregator {
      */
     public void mergeTupleIntoGroup(Tuple tup) {
         // some code goes here
+    	if (gbfield == NO_GROUPING){
+    		count++;
+    	}else{
+    		Field key = tup.getField(gbfield);
+    		if (!groups.containsKey(key)){
+    			groups.put(key, new Integer(1));
+    		}else{
+    			groups.put(key, new Integer(groups.get(key).intValue()+1));
+    		}    		
+    	}
     }
 
     /**
@@ -40,7 +136,7 @@ public class StringAggregator implements Aggregator {
      */
     public DbIterator iterator() {
         // some code goes here
-        throw new UnsupportedOperationException("please implement me for lab3");                           // cosc460
+        return new StrAggIterator();
     }
 
 }
