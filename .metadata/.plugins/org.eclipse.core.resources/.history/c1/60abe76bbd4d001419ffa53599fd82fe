@@ -47,32 +47,21 @@ public class Aggregate extends Operator {
     	}else{
     		agg = new StringAggregator(gfield, gfieldtype, afield, aop);
     	}
-    	
-		try {
+    	try {
 			child.open();
-		} catch (DbException e1) {
+		} catch (DbException | TransactionAbortedException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (TransactionAbortedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
-		
-		try {
+    	try {
 			while (child.hasNext()){
 				agg.mergeTupleIntoGroup(child.next());
 			}
-		} catch (NoSuchElementException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DbException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransactionAbortedException e) {
+		} catch (NoSuchElementException | DbException
+				| TransactionAbortedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
     	child.close();
     	iter = agg.iterator();
     }
