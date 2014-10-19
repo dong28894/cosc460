@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="simpledb.Predicate.Op"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="simpledb.Aggregator"/>
 <fullyQualifiedTypeName name="simpledb.Aggregator.Op"/>
+<fullyQualifiedTypeName name="simpledb.Predicate.Op"/>
 </qualifiedTypeNameHistroy>
