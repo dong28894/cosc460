@@ -2,9 +2,6 @@ package simpledb;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.NoSuchElementException;
-import java.util.Set;
 
 /**
  * Knows how to compute some aggregate over a set of StringFields.
