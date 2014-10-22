@@ -2,6 +2,8 @@ package simpledb;
 
 import java.util.*;
 
+import simpledb.Aggregator.Op;
+
 /**
  * The Aggregation operator that computes an aggregate (e.g., sum, avg, max,
  * min). Note that we only support aggregates over a single column, grouped by a
@@ -10,11 +12,13 @@ import java.util.*;
 public class Aggregate extends Operator {
 
     private static final long serialVersionUID = 1L;
+
     DbIterator child;
     int afield;
     int gfield;
     Aggregator.Op aop;
     DbIterator iter;
+
 
     /**
      * Constructor.
@@ -130,6 +134,7 @@ public class Aggregate extends Operator {
             TransactionAbortedException {
         // some code goes here
     	super.open();
+    	child.open();
     	iter.open();
     }
 
@@ -144,8 +149,9 @@ public class Aggregate extends Operator {
         // some code goes here
         if (iter.hasNext()){
         	return iter.next();
+        }else{
+        	return null;
         }
-        return null;
     }
 
     public void rewind() throws DbException, TransactionAbortedException {
@@ -177,7 +183,6 @@ public class Aggregate extends Operator {
 
     @Override
     public DbIterator[] getChildren() {
-        // some code goes here
         return new DbIterator[]{this.child};
     }
 
