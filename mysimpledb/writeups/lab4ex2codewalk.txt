@@ -20,7 +20,7 @@ Walk thru 2: simpledb.Parser.processNextStatement()
 
 Walk thru 3: simpledb.Parser.handleQueryStatement()
 
-	<fill this in>	
+	This method gets called if the user input is a SELECT statement. It generates and returns a query object that encapsulates the logical plan and physical plan of the statement.	
 
 Walk thru 4: simpledb.Parser.parseQueryLogicalPlan()
 

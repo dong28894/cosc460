@@ -374,7 +374,7 @@ public class HeapPage implements Page {
         }
         return count;
     }
-
+    
     /**
      * Returns true if associated slot on this page is filled.
      */

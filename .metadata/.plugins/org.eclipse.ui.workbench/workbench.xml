@@ -31,23 +31,13 @@
 <folder appearance="1" expanded="2">
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="1"/>
-<part id="2"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntHistogram.java" partName="IntHistogram.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/IntHistogram.java" title="IntHistogram.java" tooltip="mysimpledb/src/java/simpledb/IntHistogram.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/IntHistogram.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5970" selectionTopPixel="2667"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntHistogramTest.java" partName="IntHistogramTest.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/test/simpledb/IntHistogramTest.java" title="IntHistogramTest.java" tooltip="mysimpledb/test/simpledb/IntHistogramTest.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/test/simpledb/IntHistogramTest.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="8667" selectionTopPixel="4061"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Predicate.java" partName="Predicate.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/Predicate.java" title="Predicate.java" tooltip="mysimpledb/src/java/simpledb/Predicate.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/Predicate.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="477" selectionTopPixel="15"/>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalPlan.java" partName="LogicalPlan.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/LogicalPlan.java" title="LogicalPlan.java" tooltip="mysimpledb/src/java/simpledb/LogicalPlan.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/LogicalPlan.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="8" selectionOffset="2132" selectionTopPixel="782"/>
 </editor>
 </editors>
 <views>
@@ -60,6 +50,7 @@
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
+<category IMemento.internal.id="Warnings (10 items)"/>
 <category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="410" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
@@ -124,7 +115,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.ui.views.ContentOutline" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -254,7 +245,7 @@
 <layout>
 <mainWindow>
 <info folder="true" part="left">
-<folder activePageID="org.eclipse.jdt.junit.ResultView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
 <page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
@@ -308,159 +299,167 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/IntHistogram.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/test/simpledb/IntHistogramTest.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/StringHistogram.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Aggregate.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/StringAggregator.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/IntegerAggregator.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Parser.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/TableStats.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Query.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/DbIterator.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/LogicalPlan.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/LogicalScanNode.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/LogicalFilterNode.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/LogicalSelectListNode.java"/>
 </editors>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="4223" y="0"/>
+<item historyLabel="Aggregate.java" index="0">
+<position info="not_deleted" x="5620" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position/>
-</item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="4995" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="3331" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1158" y="12"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1524" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="4044" y="0"/>
-</item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="8709" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="4044" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1158" y="12"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1571" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="2491" y="19"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1735" y="8"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1783" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1158" y="12"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1735" y="8"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1158" y="12"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1964" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1966" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5491" y="0"/>
-</item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="1862" y="72"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="2603" y="0"/>
-</item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="1862" y="72"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="2603" y="0"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="1571" y="0"/>
-</item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="1862" y="72"/>
-</item>
-<item historyLabel="IntHistogram.java" index="0">
-<position/>
-</item>
-<item historyLabel="StringHistogram.java" index="2">
+<item historyLabel="Aggregate.java" index="0">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position/>
+<item historyLabel="Aggregate.java" index="0">
+<position info="not_deleted" x="3708" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5666" y="0"/>
+<item historyLabel="Aggregate.java" index="0">
+<position info="not_deleted" x="368" y="5"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5970" y="0"/>
+<item historyLabel="Aggregate.java" index="0">
+<position info="not_deleted" x="3616" y="4"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5940" y="0"/>
+<item historyLabel="Aggregate.java" index="0">
+<position info="not_deleted" x="5244" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5808" y="0"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5897" y="0"/>
+<item historyLabel="IntegerAggregator.java" index="2">
+<position info="not_deleted" x="2536" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5929" y="0"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="IntHistogram.java" index="0">
-<position info="not_deleted" x="5970" y="0"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="1881" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="1862" y="72"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="546" y="3"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="5328" y="0"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="1881" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="2012" y="0"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="1872" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="5108" y="17"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="546" y="3"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="5898" y="25"/>
+<item historyLabel="StringAggregator.java" index="1">
+<position info="not_deleted" x="1962" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="6810" y="15"/>
+<item historyLabel="IntegerAggregator.java" index="2">
+<position info="not_deleted" x="2536" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="7231" y="11"/>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="7887" y="20"/>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="2220" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="8415" y="16"/>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="23425" y="4"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="7887" y="20"/>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="23465" y="0"/>
 </item>
-<item historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="6810" y="15"/>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="24222" y="0"/>
 </item>
-<item active="true" historyLabel="IntHistogramTest.java" index="1">
-<position info="not_deleted" x="7231" y="11"/>
+<item historyLabel="TableStats.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="TableStats.java" index="4">
+<position info="not_deleted" x="5425" y="0"/>
+</item>
+<item historyLabel="TableStats.java" index="4">
+<position info="not_deleted" x="1429" y="17"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="24222" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="27848" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="19802" y="20"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="19514" y="20"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="19802" y="20"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="10962" y="0"/>
+</item>
+<item historyLabel="Query.java" index="5">
+<position info="not_deleted" x="1672" y="0"/>
+</item>
+<item historyLabel="DbIterator.java" index="6">
+<position info="not_deleted" x="2176" y="0"/>
+</item>
+<item historyLabel="Query.java" index="5">
+<position info="not_deleted" x="1672" y="0"/>
+</item>
+<item historyLabel="Query.java" index="5">
+<position info="not_deleted" x="661" y="0"/>
+</item>
+<item historyLabel="Query.java" index="5">
+<position info="not_deleted" x="2902" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="10962" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="20323" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="10710" y="20"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="11014" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="3">
+<position info="not_deleted" x="5318" y="21"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="6489" y="0"/>
+</item>
+<item historyLabel="LogicalScanNode.java" index="8">
+<position info="not_deleted" x="512" y="0"/>
+</item>
+<item historyLabel="LogicalFilterNode.java" index="9">
+<position info="not_deleted" x="1159" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="6489" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="6505" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="1470" y="11"/>
+</item>
+<item historyLabel="LogicalSelectListNode.java" index="10">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="1470" y="11"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="1668" y="0"/>
+</item>
+<item active="true" historyLabel="LogicalPlan.java" index="7">
+<position info="not_deleted" x="2132" y="8"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -479,6 +478,39 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalSelectListNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalSelectListNode.java">
+<persistable path="/mysimpledb/src/java/simpledb/LogicalSelectListNode.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalFilterNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalFilterNode.java">
+<persistable path="/mysimpledb/src/java/simpledb/LogicalFilterNode.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalScanNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalScanNode.java">
+<persistable path="/mysimpledb/src/java/simpledb/LogicalScanNode.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalPlan.java" tooltip="mysimpledb/src/java/simpledb/LogicalPlan.java">
+<persistable path="/mysimpledb/src/java/simpledb/LogicalPlan.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DbIterator.java" tooltip="mysimpledb/src/java/simpledb/DbIterator.java">
+<persistable path="/mysimpledb/src/java/simpledb/DbIterator.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Query.java" tooltip="mysimpledb/src/java/simpledb/Query.java">
+<persistable path="/mysimpledb/src/java/simpledb/Query.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStats.java" tooltip="mysimpledb/src/java/simpledb/TableStats.java">
+<persistable path="/mysimpledb/src/java/simpledb/TableStats.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Parser.java" tooltip="mysimpledb/src/java/simpledb/Parser.java">
+<persistable path="/mysimpledb/src/java/simpledb/Parser.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntegerAggregator.java" tooltip="mysimpledb/src/java/simpledb/IntegerAggregator.java">
+<persistable path="/mysimpledb/src/java/simpledb/IntegerAggregator.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="StringAggregator.java" tooltip="mysimpledb/src/java/simpledb/StringAggregator.java">
+<persistable path="/mysimpledb/src/java/simpledb/StringAggregator.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Aggregate.java" tooltip="mysimpledb/src/java/simpledb/Aggregate.java">
+<persistable path="/mysimpledb/src/java/simpledb/Aggregate.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="StringHistogram.java" tooltip="mysimpledb/src/java/simpledb/StringHistogram.java">
 <persistable path="/mysimpledb/src/java/simpledb/StringHistogram.java"/>
 </file>
@@ -490,39 +522,6 @@
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntHistogram.java" tooltip="mysimpledb/src/java/simpledb/IntHistogram.java">
 <persistable path="/mysimpledb/src/java/simpledb/IntHistogram.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Aggregate.java" tooltip="mysimpledb/src/java/simpledb/Aggregate.java">
-<persistable path="/mysimpledb/src/java/simpledb/Aggregate.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Delete.java" tooltip="mysimpledb/src/java/simpledb/Delete.java">
-<persistable path="/mysimpledb/src/java/simpledb/Delete.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DbFileIterator.java" tooltip="mysimpledb/src/java/simpledb/DbFileIterator.java">
-<persistable path="/mysimpledb/src/java/simpledb/DbFileIterator.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SeqScan.java" tooltip="mysimpledb/src/java/simpledb/SeqScan.java">
-<persistable path="/mysimpledb/src/java/simpledb/SeqScan.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SystemTestUtil.java" tooltip="mysimpledb/test/simpledb/systemtest/SystemTestUtil.java">
-<persistable path="/mysimpledb/test/simpledb/systemtest/SystemTestUtil.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapPage.java" tooltip="mysimpledb/src/java/simpledb/HeapPage.java">
-<persistable path="/mysimpledb/src/java/simpledb/HeapPage.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapFile.java" tooltip="mysimpledb/src/java/simpledb/HeapFile.java">
-<persistable path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BufferPool.java" tooltip="mysimpledb/src/java/simpledb/BufferPool.java">
-<persistable path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Filter.java" tooltip="mysimpledb/src/java/simpledb/Filter.java">
-<persistable path="/mysimpledb/src/java/simpledb/Filter.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SimpleDbTestBase.java" tooltip="mysimpledb/test/simpledb/systemtest/SimpleDbTestBase.java">
-<persistable path="/mysimpledb/test/simpledb/systemtest/SimpleDbTestBase.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="FilterBase.java" tooltip="mysimpledb/test/simpledb/systemtest/FilterBase.java">
-<persistable path="/mysimpledb/test/simpledb/systemtest/FilterBase.java"/>
 </file>
 </mruList>
 </workbench>

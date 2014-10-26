@@ -62,6 +62,10 @@ public class TableStats {
      * histograms.
      */
     static final int NUM_HIST_BINS = 100;
+    int scanCost;
+    int numTups;
+    Object[] hist;
+    int[] numDistinctVals;
 
     /**
      * Create a new TableStats object, that keeps track of statistics on each
@@ -80,6 +84,55 @@ public class TableStats {
         // necessarily have to (for example) do everything
         // in a single scan of the table.
         // some code goes here
+    	HeapFile table = (HeapFile) Database.getCatalog().getDatabaseFile(tableid);
+    	TupleDesc schema = table.getTupleDesc();
+    	hist = new Object[schema.numFields()];
+    	Integer[] max = new Integer[schema.numFields()];
+    	Integer[] min = new Integer[schema.numFields()];
+    	int numPages = table.numPages();
+    	scanCost = numPages*ioCostPerPage;
+    	TransactionId tid = new TransactionId();
+    	numTups = 0;
+    	ArrayList<HashSet<Object>> distinctVals = new ArrayList<HashSet<Object>>(schema.numFields());
+    	DbFileIterator iter = table.iterator(tid);   		
+    	try {
+			while (iter.hasNext()){
+				Tuple curr = iter.next();
+				numTups++;
+				for (int i = 0; i < hist.length; i++){    			
+					if (schema.getFieldType(i) == Type.INT_TYPE){
+						int currVal = ((IntField)curr.getField(i)).getValue();
+						distinctVals.get(i).add(new Integer(currVal));
+						if (max[i] == null || currVal > max[i].intValue()){
+							max[i] = new Integer(currVal);
+						}
+						if (min[i] == null || currVal < min[i].intValue()){
+							min[i] = new Integer(currVal);
+						}
+					}else{
+						String currVal = ((StringField)curr.getField(i)).getValue();
+						distinctVals.get(i).add(new String(currVal));
+					}
+				}
+			}
+		} catch (NoSuchElementException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DbException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransactionAbortedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	for (int i = 0; i < hist.length; i++){
+    		if (schema.getFieldType(i) == Type.INT_TYPE){
+    			hist[i] = new IntHistogram(NUM_HIST_BINS, min[i].intValue(), max[i].intValue());    		
+    		}else{
+    			hist[i] = new StringHistogram(NUM_HIST_BINS);
+    		}
+    		numDistinctVals[i] = distinctVals.size();
+    	}
     }
 
     /**
@@ -96,7 +149,7 @@ public class TableStats {
      */
     public double estimateScanCost() {
         // some code goes here
-        return 0;
+        return scanCost;
     }
 
     /**
@@ -109,7 +162,7 @@ public class TableStats {
      */
     public int estimateTableCardinality(double selectivityFactor) {
         // some code goes here
-        return 0;
+        return (int) Math.ceil(numTups*selectivityFactor);
     }
 
     /**
@@ -126,7 +179,7 @@ public class TableStats {
      */
     public int numDistinctValues(int field) {
         // some code goes here
-        throw new UnsupportedOperationException("implement me");
+        return numDistinctVals[field];
 
     }
 
@@ -142,7 +195,13 @@ public class TableStats {
      */
     public double estimateSelectivity(int field, Predicate.Op op, Field constant) {
         // some code goes here
-        return 1.0;
+        if (constant.getType() == Type.INT_TYPE){
+        	IntHistogram currFieldHist = (IntHistogram) hist[field];
+        	return currFieldHist.estimateSelectivity(op, ((IntField)constant).getValue());
+        }else{
+        	StringHistogram currFieldHist = (StringHistogram) hist[field];
+        	return currFieldHist.estimateSelectivity(op, ((StringField)constant).getValue());
+        }
     }
 
 }
