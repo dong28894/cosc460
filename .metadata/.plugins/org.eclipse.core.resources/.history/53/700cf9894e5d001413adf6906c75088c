@@ -229,6 +229,7 @@ public class TableStats {
         // some code goes here
         if (constant.getType() == Type.INT_TYPE){
         	IntHistogram currFieldHist = (IntHistogram) hist[field];
+        	System.out.println(currFieldHist);
         	return currFieldHist.estimateSelectivity(op, ((IntField)constant).getValue());
         }else{
         	StringHistogram currFieldHist = (StringHistogram) hist[field];

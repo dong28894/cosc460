@@ -94,7 +94,6 @@ public class TableStats {
     	scanCost = numPages*ioCostPerPage;
     	TransactionId tid = new TransactionId();
     	numTups = 0;
-    	numDistinctVals = new int[schema.numFields()];
     	ArrayList<HashSet<Object>> distinctVals = new ArrayList<HashSet<Object>>();
     	for (int i = 0; i < schema.numFields(); i++){
     		distinctVals.add(new HashSet<Object>());
@@ -120,7 +119,9 @@ public class TableStats {
 						distinctVals.get(i).add(new String(currVal));
 					}
 				}
-			}			
+			}
+			iter.close();
+			Database.getBufferPool().transactionComplete(tid);
 		} catch (NoSuchElementException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -130,6 +131,9 @@ public class TableStats {
 		} catch (TransactionAbortedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
     	for (int i = 0; i < hist.length; i++){
     		if (schema.getFieldType(i) == Type.INT_TYPE){
@@ -137,34 +141,8 @@ public class TableStats {
     		}else{
     			hist[i] = new StringHistogram(NUM_HIST_BINS);
     		}
-    		numDistinctVals[i] = distinctVals.get(i).size();
+    		numDistinctVals[i] = distinctVals.size();
     	}
-    	try {
-			iter.rewind();
-			while (iter.hasNext()){
-	    		Tuple curr = iter.next();
-	    		for (int i = 0; i < hist.length; i++){    			
-					if (schema.getFieldType(i) == Type.INT_TYPE){
-						int currVal = ((IntField)curr.getField(i)).getValue();
-						((IntHistogram)hist[i]).addValue(currVal);
-					}else{
-						String currVal = ((StringField)curr.getField(i)).getValue();
-						((StringHistogram)hist[i]).addValue(currVal);
-					}
-				}
-	    	}
-			iter.close();
-			Database.getBufferPool().transactionComplete(tid);
-		} catch (DbException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransactionAbortedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}    	
     }
 
     /**
