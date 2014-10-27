@@ -45,7 +45,7 @@ Walk thru 5: simpledb.LogicalPlan.physicalPlan()
 		- statsMap
 		- subplanMap
 
-	This method converts logical plan into physical plan in steps:
+	This method converts logical plan into physical plan in 4 steps:
 		1) Creates an iterator for each of the table in the vector of LogicalScanNode. subplanMap is a HashMap to map the alias of each 		table to its iterator. statsMap is a HashMap to map the name of each table to its TableStat object.filterSelectivities is a HashMap 			to map the alias of each table to the selectivity of filter oparation(s) on that table.
 		2) Applies the filter operations to the base tables. At this step, subplanMap is used to get the iterators of the base tables so 			that we can filter them by using Filter class. After that, the new iterators is put back into subplanMap, statsMap is then used to 			get the TableStats object, which computes the new selectivity. This selectivity value is stored to filterSelectivities. 
 		3) Determines the join order by passing statMaps and filterSelectivities to JoinOptimizer and then carries out all of the join 			operations. equivMap is a HashMap to map the alias of each table to its name. At this step, equivMap is used to translate the 			tables' aliases in LogicalJoinNode to tables' names so that we can use those names to pass in subplanMap and get the tables' 			iterators. The tables are then joined by the method instantiateJoin() in JoinOptimizer.
