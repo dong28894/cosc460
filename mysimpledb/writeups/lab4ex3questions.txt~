@@ -37,5 +37,5 @@ Answer these questions.  With each question is a hint as to which part of the co
 
 (Walk thru 10) In lab 3, you write Join and Filter operators.  Both of these support the DbIterator interface.  When/where are these iterators called?
 
-		Filter iterator are called in physicalPlan method to carry out the filter operations on the base tables after they are scanned. 		physicalPlan method then calls JoinOptimizer.instantiateJoin(), which makes use of Join iterator to compute the result of a join 			between two tables. 
+		Filter iterator are called in physicalPlan method to carry out the filter operations on the base tables after they are scanned. 		physicalPlan method then calls JoinOptimizer.instantiateJoin() 
 

@@ -20,11 +20,19 @@ Walk thru 2: simpledb.Parser.processNextStatement()
 
 Walk thru 3: simpledb.Parser.handleQueryStatement()
 
-	This method gets called if the user input is a SELECT statement	
+	This method gets called if the user input is a SELECT statement. It takes the ZQuery object resulted from parsing the input using Zql library	and creates a Query object by doing two things:
+		1) Create a logical plan for the query by calling parseQueryLogicalPlan(tId, s);
+		2) Create a physical plan for the query by calling lp.physicalPlan(tId,TableStats.getStatsMap(), explain);
+	It then invokes the QueryPlanVisualizer if it is available.
 
 Walk thru 4: simpledb.Parser.parseQueryLogicalPlan()
 
-	<fill this in>
+	This method creates a LogicalPlan object for the Query object. It does that in 5 steps:
+		1) Walking through all of the items in the from clause and add each item into the list of tables to be scanned.
+		2) Parsing the where clause by calling the method processExpression(tid, wx, lp). This method recursively parses the clause by first 			separating binary expressions comparing two constants (they are orginally connected by AND operator, OR operator is not supported at 			this time), and then adding LogicalJoinNode and LogicalFilterNode to the LogicalPlan based on those binary expressions.
+		3) Parsing the group by clause, throw an exception if there are more than 1 items in the clause, otherwise store the group by field 			in a string.
+		4) Walking through the items in the select clause, checking for aggregate and validity. If all of the items are valid, add each item 			to a list of fields that we will project.
+		5) Parsing the order by clause, if the item in that clause is valid, add it to the LogicalPlan object. 
 
 	Note: this method is rather long and complex.  Your walk thru should focus
 	on the high-level ideas.  Specifically, explain how SQL query is processed to construct the LogicalPlan.  
@@ -37,27 +45,32 @@ Walk thru 5: simpledb.LogicalPlan.physicalPlan()
 		- statsMap
 		- subplanMap
 
-	<fill this in>
+	This method converts logical plan into physical plan in steps:
+		1) Creates an iterator for each of the table in the vector of LogicalScanNode. subplanMap is a HashMap to map the alias of each 		table to its iterator. statsMap is a HashMap to map the name of each table to its TableStat object.filterSelectivities is a HashMap 			to map the alias of each table to the selectivity of filter oparation(s) on that table.
+		2) Applies the filter operations to the base tables. At this step, subplanMap is used to get the iterators of the base tables so 			that we can filter them by using Filter class. After that, the new iterators is put back into subplanMap, statsMap is then used to 			get the TableStats object, which computes the new selectivity. This selectivity value is stored to filterSelectivities. 
+		3) Determines the join order by passing statMaps and filterSelectivities to JoinOptimizer and then carries out all of the join 			operations. equivMap is a HashMap to map the alias of each table to its name. At this step, equivMap is used to translate the 			tables' aliases in LogicalJoinNode to tables' names so that we can use those names to pass in subplanMap and get the tables' 			iterators. The tables are then joined by the method instantiateJoin() in JoinOptimizer.
+		4) Walks the select list to determine order in which to project output fields. Project the output by using Project class. 
 
 Walk thru 6: simpledb.JoinOptimizer.orderJoins()
 
-	<fill this in>
-
+	This method takes TableStats and filterSelectivities of all of the tables in the query after they are filtered and then return the order 		in which to join the tables so that the query is optimized.
+ 
 Walk thru 7: JoinOptimizer.computeCostAndCardOfSubplan()
 
-	<fill this in>
+	This method takes a set of LogicalJoinNode and a single LogicalJoinNode in that set, computes the cost of joining that node to the set 		(excluding that node). Input to the method should have subplans for all of the subsets of size joinSet.size()-1. This method assumes left 		subtree is the joinSet, and it checks both cases
 
 Walk thru 8: JoinOptimizer.estimateJoinCost()
 
-	<fill this in>
+	This method takes a LogicalJoinNode, the cardinality as well as the cost to scan each of the tables, and then return the estimated cost to 		join these 2 tables.
 
 Walk thru 9: JoinOptimizer.estimateJoinCardinality()
 
-	<fill this in>
+	Similar to estimateJoinCost, this method takes a LogicalJoinNode, the cardinality and the TableStats of each table, computes and returns the 		estimated cardinality of the result.
 
 Walk thru 10 query.execute()
 	
 	Note: This is called inside simpledb.Parser.processNextStatement().  Refer back to Walk thru 2.
 
-	<fill this in>
+	This method prints out the query's result. simpledb.LogicalPlan.physicalPlan() is the method that computes this result, while 
+	query.execute() iterates through the result and print out each of its tuples.
 

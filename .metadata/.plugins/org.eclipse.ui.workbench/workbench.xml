@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="21" version="2.0">
+<workbench progressCount="13" version="2.0">
 <workbenchAdvisor/>
 <window height="640" maximized="true" width="1368" x="0" y="25">
 <fastViewData fastViewLocation="1024"/>
@@ -15,12 +15,12 @@
 <coolItem id="org.eclipse.debug.ui.main.toolbar" itemType="typeToolBarContribution" x="36" y="26"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="80" y="26"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="80" y="26"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="62" y="26"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="114" y="26"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="212" y="26"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditorNoSource" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
@@ -29,10 +29,31 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+<part id="3"/>
+</presentation>
 </folder>
 </info>
 </editorArea>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Parser.java" partName="Parser.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/Parser.java" title="Parser.java" tooltip="mysimpledb/src/java/simpledb/Parser.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/Parser.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4802" selectionTopPixel="1766"/>
+</editor>
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JoinOptimizer.java" partName="JoinOptimizer.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/JoinOptimizer.java" title="JoinOptimizer.java" tooltip="mysimpledb/src/java/simpledb/JoinOptimizer.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/JoinOptimizer.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="12070" selectionTopPixel="4452"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Query.java" partName="Query.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/Query.java" title="Query.java" tooltip="mysimpledb/src/java/simpledb/Query.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/Query.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="7" selectionOffset="2382" selectionTopPixel="1598"/>
+</editor>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalPlan.java" partName="LogicalPlan.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/LogicalPlan.java" title="LogicalPlan.java" tooltip="mysimpledb/src/java/simpledb/LogicalPlan.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/LogicalPlan.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="12" selectionOffset="13075" selectionTopPixel="4930"/>
+</editor>
 </editors>
 <views>
 <view id="org.eclipse.ui.navigator.ProjectExplorer" partName="Project Explorer">
@@ -41,16 +62,12 @@
 <view id="org.eclipse.jdt.junit.ResultView" partName="JUnit">
 <viewState failuresOnly="false" layout="1" orientation="2" ratio="500" scroll="false" time="true"/>
 </view>
-<view id="org.eclipse.search.ui.views.SearchView" partName="Search">
-<viewState isPinned="false">
-<view IMemento.internal.id="org.eclipse.search.text.FileSearchResultPage" org.eclipse.search.lastActivation="1" org.eclipse.search.resultpage.layout="2" org.eclipse.search.resultpage.limit="1000" org.eclipse.search.resultpage.sorting="2"/>
-<view IMemento.internal.id="" org.eclipse.search.lastActivation="0"/>
-</viewState>
-</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
-<category IMemento.internal.id="Warnings (15 items)"/>
+<category IMemento.internal.id="Warnings (4 items)"/>
+<category IMemento.internal.id="Warnings"/>
+<category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="410" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -59,6 +76,9 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.locationField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
+</view>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
@@ -89,9 +109,6 @@
 </customFilters>
 </viewState>
 </view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
-</view>
 <view id="org.eclipse.ui.views.TaskList" partName="Tasks">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
 <columnWidths org.eclipse.ui.ide.completionField="40" org.eclipse.ui.ide.descriptionField="300" org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="417" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.priorityField="30" org.eclipse.ui.ide.resourceField="90"/>
@@ -114,7 +131,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.PackageExplorer" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.ui.internal.ide.application.ResourcePerspective" id="org.eclipse.ui.resourcePerspective" label="Resource"/>
 <alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
@@ -233,21 +250,20 @@
 <hide_toolbar_item_id id="org.eclipse.debug.ui.commands.RunToLine"/>
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
-<view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <view id="org.eclipse.jdt.junit.ResultView"/>
+<view id="org.eclipse.jdt.ui.PackageExplorer"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
-<view id="org.eclipse.search.ui.views.SearchView"/>
 <view id="org.eclipse.ui.views.ContentOutline"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
 <info folder="true" part="left">
 <folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
-<page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
+<page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
@@ -266,12 +282,12 @@
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.2496318" ratioLeft="339" ratioRight="1019" relationship="2" relative="left"/>
 <info folder="true" part="bottom" ratio="0.75" ratioLeft="393" ratioRight="131" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.search.ui.views.SearchView" appearance="2" expanded="2">
+<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
 <page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
 <page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<page content="org.eclipse.search.ui.views.SearchView" label="Search"/>
+<page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
@@ -279,7 +295,6 @@
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
-<part id="4"/>
 </presentation>
 </folder>
 </info>
@@ -298,7 +313,168 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory/>
+<navigationHistory>
+<editors>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Parser.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/LogicalPlan.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/SeqScan.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/TableStats.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/JoinOptimizer.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/LogicalJoinNode.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/CostCard.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/Query.java"/>
+</editors>
+<item historyLabel="Parser.java" index="0">
+<position info="not_deleted" x="4802" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="919" y="6"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="1355" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="13075" y="12"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="14128" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="1014" y="10"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="13075" y="12"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="12359" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="14138" y="0"/>
+</item>
+<item historyLabel="SeqScan.java" index="2">
+<position info="not_deleted" x="330" y="0"/>
+</item>
+<item historyLabel="Parser.java" index="0">
+<position info="not_deleted" x="4802" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="14228" y="0"/>
+</item>
+<item historyLabel="TableStats.java" index="3">
+<position info="not_deleted" x="1457" y="17"/>
+</item>
+<item historyLabel="TableStats.java" index="3">
+<position info="not_deleted" x="8267" y="19"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="16047" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="206" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="8391" y="10"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="16378" y="0"/>
+</item>
+<item historyLabel="LogicalJoinNode.java" index="5">
+<position info="not_deleted" x="190" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="8391" y="10"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="16246" y="0"/>
+</item>
+<item historyLabel="LogicalJoinNode.java" index="5">
+<position info="not_deleted" x="644" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="21483" y="0"/>
+</item>
+<item historyLabel="LogicalJoinNode.java" index="5">
+<position info="not_deleted" x="644" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="8391" y="10"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="8775" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="9146" y="0"/>
+</item>
+<item historyLabel="CostCard.java" index="6">
+<position info="not_deleted" x="432" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="9146" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="14787" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="3819" y="16"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="4220" y="0"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="4560" y="0"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="83" y="0"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="2382" y="7"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="2825" y="0"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="1155" y="5"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="2382" y="7"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="2018" y="4"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="932" y="15"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="848" y="15"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="2382" y="7"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="524" y="0"/>
+</item>
+<item historyLabel="LogicalPlan.java" index="1">
+<position info="not_deleted" x="13075" y="12"/>
+</item>
+<item historyLabel="Query.java" index="7">
+<position info="not_deleted" x="2382" y="7"/>
+</item>
+<item historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="4560" y="0"/>
+</item>
+<item active="true" historyLabel="JoinOptimizer.java" index="4">
+<position info="not_deleted" x="10373" y="27"/>
+</item>
+</navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>
@@ -315,50 +491,50 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStatsTest.java" tooltip="/home/cosc460/Desktop/cosc460repo/mysimpledb/test/simpledb/TableStatsTest.java">
-<persistable uri="file:/home/cosc460/Desktop/cosc460repo/mysimpledb/test/simpledb/TableStatsTest.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapFile.java" tooltip="mysimpledb/src/java/simpledb/HeapFile.java">
-<persistable path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapPage.java" tooltip="mysimpledb/src/java/simpledb/HeapPage.java">
-<persistable path="/mysimpledb/src/java/simpledb/HeapPage.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TupleDesc.java" tooltip="mysimpledb/src/java/simpledb/TupleDesc.java">
-<persistable path="/mysimpledb/src/java/simpledb/TupleDesc.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="StringHistogram.java" tooltip="mysimpledb/src/java/simpledb/StringHistogram.java">
-<persistable path="/mysimpledb/src/java/simpledb/StringHistogram.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntHistogram.java" tooltip="mysimpledb/src/java/simpledb/IntHistogram.java">
-<persistable path="/mysimpledb/src/java/simpledb/IntHistogram.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStats.java" tooltip="mysimpledb/src/java/simpledb/TableStats.java">
-<persistable path="/mysimpledb/src/java/simpledb/TableStats.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalSelectListNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalSelectListNode.java">
-<persistable path="/mysimpledb/src/java/simpledb/LogicalSelectListNode.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalFilterNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalFilterNode.java">
-<persistable path="/mysimpledb/src/java/simpledb/LogicalFilterNode.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalScanNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalScanNode.java">
-<persistable path="/mysimpledb/src/java/simpledb/LogicalScanNode.java"/>
-</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalPlan.java" tooltip="mysimpledb/src/java/simpledb/LogicalPlan.java">
 <persistable path="/mysimpledb/src/java/simpledb/LogicalPlan.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="DbIterator.java" tooltip="mysimpledb/src/java/simpledb/DbIterator.java">
-<persistable path="/mysimpledb/src/java/simpledb/DbIterator.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Query.java" tooltip="mysimpledb/src/java/simpledb/Query.java">
 <persistable path="/mysimpledb/src/java/simpledb/Query.java"/>
 </file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="CostCard.java" tooltip="mysimpledb/src/java/simpledb/CostCard.java">
+<persistable path="/mysimpledb/src/java/simpledb/CostCard.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="LogicalJoinNode.java" tooltip="mysimpledb/src/java/simpledb/LogicalJoinNode.java">
+<persistable path="/mysimpledb/src/java/simpledb/LogicalJoinNode.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JoinOptimizer.java" tooltip="mysimpledb/src/java/simpledb/JoinOptimizer.java">
+<persistable path="/mysimpledb/src/java/simpledb/JoinOptimizer.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SeqScan.java" tooltip="mysimpledb/src/java/simpledb/SeqScan.java">
+<persistable path="/mysimpledb/src/java/simpledb/SeqScan.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStats.java" tooltip="mysimpledb/src/java/simpledb/TableStats.java">
+<persistable path="/mysimpledb/src/java/simpledb/TableStats.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Catalog.java" tooltip="mysimpledb/src/java/simpledb/Catalog.java">
+<persistable path="/mysimpledb/src/java/simpledb/Catalog.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Parser.java" tooltip="mysimpledb/src/java/simpledb/Parser.java">
 <persistable path="/mysimpledb/src/java/simpledb/Parser.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntegerAggregator.java" tooltip="mysimpledb/src/java/simpledb/IntegerAggregator.java">
-<persistable path="/mysimpledb/src/java/simpledb/IntegerAggregator.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntHistogram.java" tooltip="mysimpledb/src/java/simpledb/IntHistogram.java">
+<persistable path="/mysimpledb/src/java/simpledb/IntHistogram.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="IntHistogramTest.java" tooltip="mysimpledb/test/simpledb/IntHistogramTest.java">
+<persistable path="/mysimpledb/test/simpledb/IntHistogramTest.java"/>
+</file>
+<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditorNoSource" name="ArrayList.class" tooltip="java.util.ArrayList">
+<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=mysimpledb/\/usr\/lib\/jvm\/java-7-openjdk-i386\/jre\/lib\/rt.jar&lt;java.util(ArrayList.class"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Lab2Main.java" tooltip="mysimpledb/src/java/simpledb/Lab2Main.java">
+<persistable path="/mysimpledb/src/java/simpledb/Lab2Main.java"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStatsTest.java" tooltip="mysimpledb/test/simpledb/TableStatsTest.java">
+<persistable path="/mysimpledb/test/simpledb/TableStatsTest.java"/>
+</file>
+<file factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStatsTest.java" tooltip="/home/cosc460/Desktop/cosc460repo/mysimpledb/test/simpledb/TableStatsTest.java">
+<persistable uri="file:/home/cosc460/Desktop/cosc460repo/mysimpledb/test/simpledb/TableStatsTest.java"/>
 </file>
 </mruList>
 </workbench>
