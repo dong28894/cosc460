@@ -152,8 +152,10 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1
     	DbFile currFile = Database.getCatalog().getDatabaseFile(tableId);
-    	ArrayList<Page> modPg = currFile.insertTuple(tid, t);
-    	modPg.get(0).markDirty(true, tid);
+    	ArrayList<Page> modPgs = currFile.insertTuple(tid, t);
+    	for (Page pg: modPgs){
+    		pg.markDirty(true, tid);
+    	}
     }
 
     /**
@@ -173,8 +175,10 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1
     	DbFile currFile = Database.getCatalog().getDatabaseFile(t.getRecordId().getPageId().getTableId());
-    	ArrayList<Page> modPg = currFile.deleteTuple(tid, t);
-    	modPg.get(0).markDirty(true, tid);
+    	ArrayList<Page> modPgs = currFile.deleteTuple(tid, t);
+    	for (Page pg: modPgs){
+    		pg.markDirty(true, tid);
+    	}
     }
 
     /**

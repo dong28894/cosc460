@@ -10,20 +10,50 @@ and a.fname='Ginger' and a.lname='Rogers';
 
 Query 1 optimizer's plan:
 
-<fill in here>
+                                                 π(d.fname,d.lname),card:1
+                                                 |
+                                                 ⨝(m.did=d.id),card:1
+                              ___________________|____________________
+                              |                                      |
+                              ⨝(c.mid=m.mid),card:1                  |
+                ______________|_______________                       |
+                |                            |                       |
+                ⨝(a.id=c.pid),card:1         |                       |
+  ______________|______________              |                       |
+  |                           |              |                       |
+  σ(a.lname=Rogers),card:1    |              |                       |
+  |                           |              |                       |
+  σ(a.fname=Ginger),card:1    |              |                       |
+  |                           |            scan(Movie_Director m)    |
+scan(Actor a)               scan(Casts c)                          scan(Director d)
+
 
 Query 1 plan explanation:
 
-<fill in here>
+For Actor table, filter operations are applied first because that would reduce the cardinality of inputs for later join operation.
+For nested loop join, joincost(t1 join t2) = scancost(t1) + ntups(t1) x scancost(t2). So it's better if the outer relation is the smaller table so that ntups(t1) is minimized. Therefore, the optimizer pushed Actor table, whose cardinality after being filtered is only 1, to the leftmost position, and chose a left-deep join tree that minimized the cardinality of each join operation's result.
 
 Query 2:
 
-<fill in here>
+select m.name
+from Movie_Director md, Director d, Movie m
+where md.did = d.id and md.mid = m.id and d.lname = 'Hitchcock' and m.year > 1960; 
 
-Query 1 optimizer's plan:
+Query 2 optimizer's plan:
 
-<fill in here>
+                                     π(m.name),card:0
+                                     |
+                                     ⨝(md.mid=m.id),card:0
+                 ____________________|_____________________
+                 |                                        |
+                 ⨝(d.id=md.did),card:1                    σ(m.year>1960),card:1947
+  _______________|________________                        |
+  |                              |                        |
+  σ(d.lname=Hitchcock),card:1    |                        |
+  |                              |                      scan(Movie m)
+scan(Director d)               scan(Movie_Director md)
 
-Query 1 plan explanation:
 
-<fill in here>
+Query 2 plan explanation:
+
+Similar to query 1, the optimizer chose to apply filter operations on base table first, and then push Director table (cardinality = 1) to the leftmost position in a left-deep join tree so that the outer relation in a join operation is always the one of smaller size, hence the optimal cost and cardinality of join operations.

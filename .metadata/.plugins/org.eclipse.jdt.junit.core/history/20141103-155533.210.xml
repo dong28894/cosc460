@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="JoinOptimizerTest" project="mysimpledb" tests="5" started="5" failures="0" errors="0" ignored="0">
+  <testsuite name="simpledb.JoinOptimizerTest" time="64.389">
+    <testcase name="estimateJoinCostTest" classname="simpledb.JoinOptimizerTest" time="4.142"/>
+    <testcase name="estimateJoinCardinality" classname="simpledb.JoinOptimizerTest" time="1.263"/>
+    <testcase name="orderJoinsTest" classname="simpledb.JoinOptimizerTest" time="14.42"/>
+    <testcase name="bigOrderJoinsTest" classname="simpledb.JoinOptimizerTest" time="44.358"/>
+    <testcase name="nonequalityOrderJoinsTest" classname="simpledb.JoinOptimizerTest" time="0.204"/>
+  </testsuite>
+</testrun>
