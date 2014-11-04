@@ -151,28 +151,36 @@ public class JoinOptimizer {
                                                    String table1Alias, String table2Alias, String field1PureName,
                                                    String field2PureName, int card1, int card2, boolean t1pkey,
                                                    boolean t2pkey, Map<String, TableStats> stats,
-                                                   Map<String, Integer> tableAliasToId) {
-        int card = 1;
+                                                   Map<String, Integer> tableAliasToId) {        
         // some code goes here
         if (joinOp == Predicate.Op.EQUALS){
-        	if (!t1pkey && !t2pkey){
-        		int t1Id = tableAliasToId.get(table1Alias);
-        		int t2Id = tableAliasToId.get(table2Alias);
-        		Catalog cat = Database.getCatalog();
-        		String t1Name = cat.getTableName(t1Id);
-        		String t2Name = cat.getTableName(t2Id);
-        		TableStats t1Stats = stats.get(t1Name);
-        		TableStats t2Stats = stats.get(t2Name);
-        		int field1No = cat.getTupleDesc(t1Id).fieldNameToIndex(field1PureName);
-        		int field2No = cat.getTupleDesc(t2Id).fieldNameToIndex(field2PureName);
-        		int vOfT1 = t1Stats.numDistinctValues(field1No);
-        		int vOfT2 = t2Stats.numDistinctValues(field2No);
-        		return (card1*card2)/Math.max(vOfT1, vOfT2);
-        	}else if (t1pkey){
-        		return card2;
-        	}else{
-        		return card1;
+        	int t1Id = tableAliasToId.get(table1Alias);
+        	int t2Id = tableAliasToId.get(table2Alias);
+        	Catalog cat = Database.getCatalog();
+        	String t1Name = cat.getTableName(t1Id);
+        	String t2Name = cat.getTableName(t2Id);
+        	TableStats t1Stats = stats.get(t1Name);
+        	TableStats t2Stats = stats.get(t2Name);
+        	int field1No = cat.getTupleDesc(t1Id).fieldNameToIndex(field1PureName);
+        	int field2No = cat.getTupleDesc(t2Id).fieldNameToIndex(field2PureName);
+        	int vOfT1 = t1Stats.numDistinctValues(field1No);
+        	int vOfT2 = t2Stats.numDistinctValues(field2No);
+        	int card = (card1*card2)/Math.max(vOfT1, vOfT2);
+        	if (t1pkey && !t2pkey){
+        		if (card > card2){
+        			card = card2;
+        		}
+        	}else if (t2pkey){
+        		if (card > card1){
+        			card = card1;
+        		}
+        	}else if (t1pkey && t2pkey){
+        		int lim = Math.min(card1, card2);
+        		if (card > lim){
+        			card = lim;
+        		}
         	}
+        	return card;
         }else{
         	return card1*card2*70/100;
         }
@@ -236,25 +244,41 @@ public class JoinOptimizer {
         // some code goes here
         //Replace the following
     	PlanCache pc = new PlanCache();
-        for (int i = 0; i < joins.size(); i++){
+        for (int i = 1; i <= joins.size(); i++){
         	for (Set<LogicalJoinNode> subset1: enumerateSubsets(joins, i)){
         		Iterator<LogicalJoinNode> subsetIter = subset1.iterator();
         		if (i == 1){
         			LogicalJoinNode joinToRemove = subsetIter.next();
-        			CostCard plan = computeCostAndCardOfSubplan(stats, filterSelectivities, joinToRemove, subset1, pc);
+        			CostCard plan = computeCostAndCardOfSubplan(stats, filterSelectivities, joinToRemove, subset1, Double.MAX_VALUE, pc);
         			pc.addPlan(subset1, plan.cost, plan.card, plan.plan);
         		}else{
-        			Vector<LogicalJoinNode> bestPlan;
+        			CostCard bestPlan = null;
         			while (subsetIter.hasNext()){
         				LogicalJoinNode joinToRemove = subsetIter.next();
-        				Set<LogicalJoinNode> subset2 = new HashSet<LogicalJoinNode>(subset1);
-        				subset2.remove(joinToRemove);
-        				Vector<LogicalJoinNode> subplan = pc.getOrder(subset2);
-        				CostCard plan = computeCostAndCardOfSubplan();
+        				CostCard plan;
+        				if (bestPlan == null){
+        					plan = computeCostAndCardOfSubplan(stats, filterSelectivities, joinToRemove, subset1, Double.MAX_VALUE, pc);
+        				}else{
+        					plan = computeCostAndCardOfSubplan(stats, filterSelectivities, joinToRemove, subset1, bestPlan.cost, pc);
+        				}
+        				if (plan != null){
+        					bestPlan = plan;
+        				}
+        			}
+        			if (bestPlan != null){
+        				pc.addPlan(subset1, bestPlan.cost, bestPlan.card, bestPlan.plan);
+        			}else{
+        				pc.addPlan(subset1, Double.MAX_VALUE, Integer.MAX_VALUE, null);
         			}
         		}
         	}
         }
+        Set<LogicalJoinNode> allNodes = new HashSet<LogicalJoinNode>(joins);
+        Vector<LogicalJoinNode> result = pc.getOrder(allNodes);
+        if (explain){
+        	printJoins(result, pc, stats, filterSelectivities);
+        }
+        return result;
     }
 
     // ===================== Private Methods =================================
@@ -304,7 +328,6 @@ public class JoinOptimizer {
                 this.p.getTableId(j.t2Alias));
         String table1Alias = j.t1Alias;
         String table2Alias = j.t2Alias;
-
         Set<LogicalJoinNode> news = (Set<LogicalJoinNode>) ((HashSet<LogicalJoinNode>) joinSet)
                 .clone();
         news.remove(j);

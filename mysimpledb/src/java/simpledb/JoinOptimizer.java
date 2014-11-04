@@ -166,11 +166,11 @@ public class JoinOptimizer {
         	int vOfT1 = t1Stats.numDistinctValues(field1No);
         	int vOfT2 = t2Stats.numDistinctValues(field2No);
         	int card = (card1*card2)/Math.max(vOfT1, vOfT2);
-        	if (t1pkey){
+        	if (t1pkey && !t2pkey){
         		if (card > card2){
         			card = card2;
         		}
-        	}else if (t2pkey){
+        	}else if (t2pkey && !t1pkey){
         		if (card > card1){
         			card = card1;
         		}
