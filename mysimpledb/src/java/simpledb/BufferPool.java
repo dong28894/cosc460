@@ -3,6 +3,7 @@ package simpledb;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * BufferPool manages the reading and writing of pages into memory from
@@ -15,7 +16,8 @@ import java.util.HashMap;
  *
  * @Threadsafe, all fields are final
  */
-public class BufferPool {
+public class BufferPool {	
+	HashMap<PageId, TransactionId> lockTable;
     /**
      * Bytes per page, including header.
      */
@@ -43,6 +45,7 @@ public class BufferPool {
     	pool = new HashMap<PageId, Page>();
     	accessTime = new HashMap<PageId, Long>();
     	this.numPages = numPages;
+    	lockTable = new HashMap<PageId, TransactionId>();
     }
 
     public static int getPageSize() {
@@ -82,6 +85,18 @@ public class BufferPool {
         	DbFile file = currentCatalog.getDatabaseFile(tableId);
         	currentPage = file.readPage(pid);
         	pool.put(pid, currentPage);
+        }        
+        synchronized(this){
+        	TransactionId currHold = lockTable.get(pid);
+        	while (currHold != null){
+        		try {
+        			wait();
+        		} catch (InterruptedException e) {
+        			// TODO Auto-generated catch block
+        			e.printStackTrace();
+        		}
+        	}
+        	lockTable.put(pid, tid);
         }
         accessTime.put(pid, System.currentTimeMillis());
         return currentPage;        
@@ -99,6 +114,13 @@ public class BufferPool {
     public void releasePage(TransactionId tid, PageId pid) {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
+    	synchronized(this){
+    		TransactionId currHold = lockTable.get(pid);
+    		if (currHold == tid){
+    			lockTable.put(pid, null);
+    		}
+    		notifyAll();
+    	}
     }
 
     /**
@@ -117,7 +139,13 @@ public class BufferPool {
     public boolean holdsLock(TransactionId tid, PageId p) {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
-        return false;
+        synchronized(this){
+        	TransactionId currHold = lockTable.get(p);
+    		if (currHold == tid){
+    			return true;
+    		}
+    		return false;
+        }
     }
 
     /**

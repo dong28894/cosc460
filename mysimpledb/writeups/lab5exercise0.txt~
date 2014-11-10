@@ -1,0 +1,19 @@
+Your name(s): Dong Mai
+
+1. Explain how you modified SynchronizedThreads in exercise 1.
+	I used a synchronized statement on "counter.increment(name);" statement in Incrementer class's run method.
+2. Briefly describe (1-2 sentences) an alternate implementation for exercise 1.
+	An alternate implementation is to add synchronized keyword to increment() and getCount() method of Counter class.
+3. Exercise 2: Explain the deadlock that happens in Deadlock in terms of locks and threads waiting on locks. The two threads in this case are alphonse and gaston. 
+
+a) What objects are being locked? 
+	Both alphonse and gaston objects are being locked
+b) Who has what locks? 
+	The alphonse thread holds the lock for alphonse object, and the gaston thread holds the lock for gaston object.
+c) How does deadlock occur?
+	Because gaston thread holds the lock for gaston object, alphonse thread will be blocked when it tries to invoke bowBack method on gaston 		object. Therefore, the bow method in alphonse object will never finish and it will never release the lock for alphonse object. This, in turn, 		becomes a problem when the gaston thread tries to call bowBack method in alphonse object.
+4. Return to exercise 1, can deadlock occur here?  Explain why or why not.
+	Deadlock cannot occur here because 
+5. Explain why acquireLock uses a synchronized statement inside the body of the method. In other words, why not just make the acquireLock method synchronized, just like releaseLock? Will this work? Why or why not?
+	We cannot make the acquireLock method synchronized because it will create a deadlock. For example, suppose thread 1 is running, it has 		incremented the counter but it is interrupted by thread 2 before calling releasLock method. Because inUse value is still true, thread 2 gets 		stuck in the while loop inside acquireLock method. When thread 1 gets executed again, thread 2 is still holding the lock on LockManager 	object. Therefore, thread 1 is not allowed to call releaseLock method on that same object, and we get a deadlock. 
+	
