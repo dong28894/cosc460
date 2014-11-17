@@ -16,8 +16,105 @@ import java.util.LinkedList;
  *
  * @Threadsafe, all fields are final
  */
-public class BufferPool {	
-	HashMap<PageId, TransactionId> lockTable;
+public class BufferPool {
+	public class LockManager{
+		public class Request{
+			TransactionId tid;
+			Permissions perm;
+			public Request(TransactionId tid, Permissions perm){
+				this.tid = tid;
+				this.perm = perm;
+			}
+			public TransactionId getTid(){
+				return tid;
+			}
+			public Permissions getPerm(){
+				return perm;
+			}
+			public void setTid(TransactionId tid){
+				this.tid = tid;
+			}
+			public void setPerm(Permissions perm){
+				this.perm = perm;
+			}
+		}
+		LinkedList<Request> requests;
+		LinkedList<Request> lockHolders;
+		boolean isReadLock;
+		public LockManager(){
+			requests = new LinkedList<Request>();
+			lockHolders = new LinkedList<Request>();
+			isReadLock = false;
+		}
+		public void addRequest(TransactionId tid, Permissions perm){
+			Request currReq = new Request(tid, perm);			
+			requests.add(currReq);			
+		}
+		public void remove(TransactionId tid){
+			for (Request req: requests){
+				if (req.getTid() == tid){
+					requests.remove(req);
+					break;
+				}
+			}
+			for (Request req: lockHolders){
+				if (req.getTid() == tid){
+					lockHolders.remove(req);
+					break;
+				}
+			}
+		}
+		public void updateLock(){
+			if (lockHolders.isEmpty()){
+				if (!requests.isEmpty()){
+					if (requests.peek().getPerm() == Permissions.READ_WRITE){
+						lockHolders.add(requests.peek());
+						isReadLock = false;
+					}else{
+						for (Request req:requests){
+							if (req.getPerm() == Permissions.READ_ONLY){
+								lockHolders.add(req);
+							}else{
+								break;
+							}
+						}
+						isReadLock = true;
+					}
+				}
+			}else{
+				if (isReadLock){
+					for (Request req:requests){
+						if (req.getPerm() == Permissions.READ_ONLY){
+							lockHolders.add(req);
+						}else{
+							break;
+						}
+					}
+				}
+			}			
+		}
+		public boolean holdsLock(TransactionId tid){
+			for (Request req: lockHolders){
+				if (req.getTid() == tid){
+					return true;
+				}
+			}
+			return false;
+		}
+		public void printRequests(){
+			System.out.println("Requests:");
+			for (Request req: requests){
+				System.out.println(req.getTid().getId() + " " + req.getPerm());
+			}
+		}
+		public void printHolders(){
+			System.out.println("Holders:");
+			for (Request req: lockHolders){
+				System.out.println(req.getTid().getId() + " " + req.getPerm());
+			}
+		}
+	}
+	HashMap<PageId, LockManager> lockTable;
     /**
      * Bytes per page, including header.
      */
@@ -45,7 +142,7 @@ public class BufferPool {
     	pool = new HashMap<PageId, Page>();
     	accessTime = new HashMap<PageId, Long>();
     	this.numPages = numPages;
-    	lockTable = new HashMap<PageId, TransactionId>();
+    	lockTable = new HashMap<PageId, LockManager>();
     }
 
     public static int getPageSize() {
@@ -75,28 +172,41 @@ public class BufferPool {
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
         // some code goes here
-        Page currentPage = (Page) pool.get(pid);
-        if (currentPage == null){
-        	if (pool.size() == numPages){
-        		evictPage();
-        	}
-        	int tableId = pid.getTableId();
-        	Catalog currentCatalog = Database.getCatalog();
-        	DbFile file = currentCatalog.getDatabaseFile(tableId);
-        	currentPage = file.readPage(pid);
-        	pool.put(pid, currentPage);
-        }        
+    	Page currentPage;
+    	synchronized (this){
+    		currentPage = (Page) pool.get(pid);
+    		if (currentPage == null){
+    			if (pool.size() == numPages){
+    				evictPage();
+    			}
+    			int tableId = pid.getTableId();
+    			Catalog currentCatalog = Database.getCatalog();
+    			DbFile file = currentCatalog.getDatabaseFile(tableId);
+    			currentPage = file.readPage(pid);
+    			pool.put(pid, currentPage);
+    		}
+    	}
+        LockManager currLock; 
         synchronized(this){
-        	TransactionId currHold = lockTable.get(pid);
-        	while (currHold != null){
+        	currLock = lockTable.get(pid);
+        	if (currLock == null){
+        		currLock = new LockManager();
+        		lockTable.put(pid, currLock);
+        	}
+        }
+        synchronized (currLock){
+        	currLock.addRequest(tid, perm);
+        	currLock.updateLock();
+        	while (!currLock.holdsLock(tid)){
         		try {
-        			wait();
+        			synchronized(this){
+        				wait();
+        			}
         		} catch (InterruptedException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();
         		}
-        	}
-        	lockTable.put(pid, tid);
+        	}        	
         }
         accessTime.put(pid, System.currentTimeMillis());
         return currentPage;        
@@ -114,12 +224,13 @@ public class BufferPool {
     public void releasePage(TransactionId tid, PageId pid) {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
-    	synchronized(this){
-    		TransactionId currHold = lockTable.get(pid);
-    		if (currHold == tid){
-    			lockTable.put(pid, null);
+    	LockManager currLock = lockTable.get(pid);
+    	synchronized(currLock){    		
+    		currLock.remove(tid);
+    		currLock.updateLock();
+    		synchronized(this){
+    			notifyAll();
     		}
-    		notifyAll();
     	}
     }
 
@@ -139,12 +250,12 @@ public class BufferPool {
     public boolean holdsLock(TransactionId tid, PageId p) {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
-        synchronized(this){
-        	TransactionId currHold = lockTable.get(p);
-    		if (currHold == tid){
-    			return true;
+    	LockManager currLock = lockTable.get(p);
+    	synchronized(currLock){
+    		if (currLock == null){
+    			return false;
     		}
-    		return false;
+        	return currLock.holdsLock(tid);
         }
     }
 
@@ -269,16 +380,16 @@ public class BufferPool {
     	PageId oldestPage = null;
     	Long oldestTime = null;
     	for (PageId currPage : accessTime.keySet()){
-    		if ((oldestTime == null) || (accessTime.get(currPage) < oldestTime)){
-    			oldestPage = currPage;
-    			oldestTime = accessTime.get(currPage);
+    		if (pool.get(currPage).isDirty() == null){
+    			if ((oldestTime == null) || (accessTime.get(currPage) < oldestTime)){
+    				oldestPage = currPage;
+    				oldestTime = accessTime.get(currPage);
+    			}
     		}
     	}
-    	try {
-			flushPage(oldestPage);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    	if (oldestPage == null){
+    		throw new DbException("All pages are dirty");
+    	}
     	pool.remove(oldestPage);
     	accessTime.remove(oldestPage);
     }
