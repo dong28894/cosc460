@@ -135,7 +135,7 @@ public class TableStats {
 		}
     	for (int i = 0; i < hist.length; i++){
     		if (schema.getFieldType(i) == Type.INT_TYPE){
-    			hist[i] = new IntHistogram(NUM_HIST_BINS, min[i], max[i]);    		
+    			hist[i] = new IntHistogram(NUM_HIST_BINS, min[i].intValue(), max[i].intValue());    		
     		}else{
     			hist[i] = new StringHistogram(NUM_HIST_BINS);
     		}

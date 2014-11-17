@@ -90,8 +90,6 @@ public class TableStats {
     	hist = new Object[schema.numFields()];
     	int[] max = new int[schema.numFields()];
     	int[] min = new int[schema.numFields()];
-    	Arrays.fill(max, Integer.MIN_VALUE);
-    	Arrays.fill(min, Integer.MAX_VALUE);
     	int numPages = table.numPages();
     	scanCost = numPages*ioCostPerPage;
     	TransactionId tid = new TransactionId();
@@ -111,11 +109,11 @@ public class TableStats {
 					if (schema.getFieldType(i) == Type.INT_TYPE){
 						int currVal = ((IntField)curr.getField(i)).getValue();
 						distinctVals.get(i).add(new Integer(currVal));
-						if (currVal > max[i]){
-							max[i] = currVal;
+						if (max[i] == null || currVal > max[i].intValue()){
+							max[i] = new Integer(currVal);
 						}
-						if (currVal < min[i]){
-							min[i] = currVal;
+						if (min[i] == null || currVal < min[i].intValue()){
+							min[i] = new Integer(currVal);
 						}
 					}else{
 						String currVal = ((StringField)curr.getField(i)).getValue();
@@ -135,7 +133,7 @@ public class TableStats {
 		}
     	for (int i = 0; i < hist.length; i++){
     		if (schema.getFieldType(i) == Type.INT_TYPE){
-    			hist[i] = new IntHistogram(NUM_HIST_BINS, min[i], max[i]);    		
+    			hist[i] = new IntHistogram(NUM_HIST_BINS, min[i].intValue(), max[i].intValue());    		
     		}else{
     			hist[i] = new StringHistogram(NUM_HIST_BINS);
     		}

@@ -47,7 +47,17 @@ public class BufferPool {
 			isReadLock = false;
 		}
 		public void addRequest(TransactionId tid, Permissions perm){
-			Request currReq = new Request(tid, perm);			
+			Request currReq = new Request(tid, perm);
+			boolean isDuplicate = false;
+			for (Request req: lockHolders){
+				if (req.getTid() == tid){
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (isDuplicate && perm == Permissions.READ_WRITE){
+				requests.add(0, currReq);
+			}
 			requests.add(currReq);			
 		}
 		public void remove(TransactionId tid){
