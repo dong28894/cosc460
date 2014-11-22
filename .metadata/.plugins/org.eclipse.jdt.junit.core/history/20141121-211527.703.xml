@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="TransactionTest" project="mysimpledb" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="simpledb.TransactionTest" time="2.551">
-    <testcase name="attemptTransactionTwice" classname="simpledb.TransactionTest" time="1.834"/>
-    <testcase name="commitTransaction" classname="simpledb.TransactionTest" time="0.384"/>
-    <testcase name="abortTransaction" classname="simpledb.TransactionTest" time="0.333"/>
-  </testsuite>
-</testrun>

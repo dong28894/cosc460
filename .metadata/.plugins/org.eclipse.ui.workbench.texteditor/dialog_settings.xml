@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="308" key="DIALOG_WIDTH"/>
-		<item value="24" key="DIALOG_Y_ORIGIN"/>
-		<item value="1058" key="DIALOG_X_ORIGIN"/>
-		<item value="411" key="DIALOG_HEIGHT"/>
+		<item value="310" key="DIALOG_WIDTH"/>
+		<item value="52" key="DIALOG_Y_ORIGIN"/>
+		<item value="412" key="DIALOG_HEIGHT"/>
+		<item value="1018" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Droid Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Catalog" key="selection"/>
+		<item value="getId" key="selection"/>
 		<list key="findhistory">
+			<item value="getId"/>
+			<item value="catch"/>
 			<item value="catalog"/>
 			<item value="bestCostSoFar"/>
 			<item value="join"/>
 			<item value="Filter"/>
 			<item value="DbIterator"/>
 			<item value="filterSelectivities"/>
-			<item value="baseTableStats"/>
-			<item value="handleQueryStatement"/>
 		</list>
 		<list key="replacehistory">
 			<item value="schema"/>
