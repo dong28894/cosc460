@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="20" version="2.0">
+<workbench progressCount="21" version="2.0">
 <workbenchAdvisor/>
 <window height="636" maximized="true" width="1364" x="0" y="25">
 <fastViewData fastViewLocation="1024"/>
@@ -33,27 +33,17 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
-<part id="2"/>
-<part id="3"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="JoinOptimizer.java" partName="JoinOptimizer.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/JoinOptimizer.java" title="JoinOptimizer.java" tooltip="mysimpledb/src/java/simpledb/JoinOptimizer.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/JoinOptimizer.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="10" selectionOffset="9525" selectionTopPixel="3672"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStats.java" partName="TableStats.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/TableStats.java" title="TableStats.java" tooltip="mysimpledb/src/java/simpledb/TableStats.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/TableStats.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="5196" selectionTopPixel="2225"/>
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BufferPool.java" partName="BufferPool.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/BufferPool.java" title="BufferPool.java" tooltip="mysimpledb/src/java/simpledb/BufferPool.java" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3617" selectionTopPixel="253"/>
 </editor>
 <editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapFile.java" partName="HeapFile.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/HeapFile.java" title="HeapFile.java" tooltip="mysimpledb/src/java/simpledb/HeapFile.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="11" selectionOffset="4721" selectionTopPixel="2821"/>
-</editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BufferPool.java" partName="BufferPool.java" path="/home/cosc460/Desktop/cosc460repo/mysimpledb/src/java/simpledb/BufferPool.java" title="BufferPool.java" tooltip="mysimpledb/src/java/simpledb/BufferPool.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="11" selectionOffset="6608" selectionTopPixel="3757"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="4426" selectionTopPixel="2312"/>
 </editor>
 </editors>
 <views>
@@ -67,7 +57,6 @@
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
 <expanded>
 <category IMemento.internal.id="Warnings (28 items)"/>
-<category IMemento.internal.id="Errors"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="90" org.eclipse.ui.ide.markerType="410" org.eclipse.ui.ide.pathField="120" org.eclipse.ui.ide.resourceField="90" org.eclipse.ui.ide.severityAndDescriptionField="300"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -251,7 +240,6 @@
 <hide_toolbar_item_id id="org.eclipse.jdt.ui.actions.OpenProjectWizard"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <view id="org.eclipse.jdt.ui.PackageExplorer"/>
-<view id="org.eclipse.jdt.junit.ResultView"/>
 <view id="org.eclipse.ui.views.ProblemView"/>
 <view id="org.eclipse.jdt.ui.JavadocView"/>
 <view id="org.eclipse.jdt.ui.SourceView"/>
@@ -263,13 +251,12 @@
 <info folder="true" part="left">
 <folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
 <page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
-<page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
+<page content="org.eclipse.jdt.junit.ResultView" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
-<part id="1"/>
 </presentation>
 </folder>
 </info>
@@ -317,164 +304,157 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/HeapPage.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/test/simpledb/LockingTest.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/HeapPage.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/JoinOptimizer.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/TableStats.java"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/mysimpledb/src/java/simpledb/SeqScan.java"/>
 </editors>
-<item historyLabel="HeapPage.java" index="1">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="HeapPage.java" index="1">
-<position info="not_deleted" x="10400" y="7"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="5626" y="7"/>
 </item>
 <item historyLabel="BufferPool.java" index="0">
-<position info="not_deleted" x="12414" y="0"/>
+<position info="not_deleted" x="9153" y="19"/>
 </item>
 <item historyLabel="BufferPool.java" index="0">
-<position info="not_deleted" x="12434" y="0"/>
+<position info="not_deleted" x="10586" y="11"/>
 </item>
 <item historyLabel="BufferPool.java" index="0">
-<position info="not_deleted" x="12702" y="0"/>
+<position info="not_deleted" x="11566" y="11"/>
 </item>
 <item historyLabel="BufferPool.java" index="0">
-<position info="not_deleted" x="12693" y="0"/>
+<position info="not_deleted" x="12942" y="9"/>
 </item>
 <item historyLabel="BufferPool.java" index="0">
-<position info="not_deleted" x="12692" y="0"/>
+<position info="not_deleted" x="9153" y="19"/>
 </item>
-<item historyLabel="LockingTest.java" index="2">
-<position info="not_deleted" x="4096" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="13958" y="9"/>
 </item>
-<item historyLabel="HeapPage.java" index="3">
-<position info="not_deleted" x="10400" y="7"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="9153" y="19"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="5626" y="7"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="356" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="7542" y="0"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="5849" y="28"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="9153" y="19"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="7415" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="11162" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="5626" y="7"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="6242" y="0"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="419" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="9153" y="19"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="1457" y="17"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="9848" y="0"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="2181" y="15"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3849" y="8"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="7694" y="17"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3710" y="10"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="2558" y="10"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="592" y="11"/>
 </item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="5319" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="2388" y="0"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="11162" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="12942" y="9"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="10107" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="13152" y="0"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="13081" y="27"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="5626" y="7"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="15467" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="1264" y="10"/>
 </item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="7882" y="16"/>
-</item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="5849" y="28"/>
-</item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="7528" y="0"/>
-</item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="3819" y="16"/>
-</item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="5125" y="23"/>
-</item>
-<item historyLabel="JoinOptimizer.java" index="4">
-<position info="not_deleted" x="9525" y="10"/>
-</item>
-<item historyLabel="TableStats.java" index="5">
-<position info="not_deleted" x="5196" y="0"/>
-</item>
-<item historyLabel="HeapFile.java" index="6">
-<position info="not_deleted" x="500" y="0"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="5781" y="0"/>
-</item>
-<item historyLabel="HeapFile.java" index="6">
-<position info="not_deleted" x="2093" y="0"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="5781" y="0"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="10594" y="0"/>
-</item>
-<item historyLabel="HeapFile.java" index="6">
-<position info="not_deleted" x="2093" y="0"/>
-</item>
-<item historyLabel="HeapFile.java" index="6">
-<position info="not_deleted" x="4721" y="11"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="10594" y="0"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="4930" y="7"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="3577" y="8"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="1592" y="0"/>
-</item>
-<item historyLabel="BufferPool.java" index="7">
+<item historyLabel="BufferPool.java" index="0">
 <position info="not_deleted" x="1587" y="0"/>
 </item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="1661" y="0"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="5626" y="7"/>
 </item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="6608" y="11"/>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="1264" y="10"/>
 </item>
-<item historyLabel="SeqScan.java" index="8">
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3621" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="12942" y="9"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="13265" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3067" y="15"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3621" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3135" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3168" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3234" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3238" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3236" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3284" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3336" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3335" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3338" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3621" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3496" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3494" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3496" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3621" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3580" y="0"/>
+</item>
+<item historyLabel="BufferPool.java" index="0">
+<position info="not_deleted" x="3617" y="0"/>
+</item>
+<item historyLabel="HeapFile.java" index="1">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="BufferPool.java" index="7">
-<position info="not_deleted" x="6608" y="11"/>
-</item>
-<item active="true" historyLabel="HeapFile.java" index="6">
-<position info="not_deleted" x="4721" y="11"/>
+<item active="true" historyLabel="HeapFile.java" index="1">
+<position info="not_deleted" x="4155" y="9"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -493,14 +473,14 @@
 </trimLayout>
 </window>
 <mruList>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapFile.java" tooltip="mysimpledb/src/java/simpledb/HeapFile.java">
+<persistable path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
+</file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="SeqScan.java" tooltip="mysimpledb/src/java/simpledb/SeqScan.java">
 <persistable path="/mysimpledb/src/java/simpledb/SeqScan.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="BufferPool.java" tooltip="mysimpledb/src/java/simpledb/BufferPool.java">
 <persistable path="/mysimpledb/src/java/simpledb/BufferPool.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="HeapFile.java" tooltip="mysimpledb/src/java/simpledb/HeapFile.java">
-<persistable path="/mysimpledb/src/java/simpledb/HeapFile.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TableStats.java" tooltip="mysimpledb/src/java/simpledb/TableStats.java">
 <persistable path="/mysimpledb/src/java/simpledb/TableStats.java"/>

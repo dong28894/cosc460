@@ -5,38 +5,38 @@ After you complete lab 5, please answer the following questions.
 
 1. What is your name?  If you work with a partner, be sure to write both of your names.
 
-	(Replace this text with your answer)
+	Dong Mai
 
 2. What did you think of this assignment?
 
-	(Replace this text with your answer)
+	Very challenging
 
 3. What was the hardest part of this assignment?
 
-	(Replace this text with your answer)
+	To understand how the test works
 
 4. Describe any missing or incomplete elements of your code.
 
-	(Replace this text with your answer)
+	I didn't pass the last 3 tests in the system test TransactionTest due to the lack of time.
 
 5. Roughly how long did you spend working on this lab?
 
-	(Replace this text with your answer)
+	roughly 6-7 hours every week.
 
 6. Describe your lock manager implementation.  Here are some specific questions to answer:
 
 a) Where is your lock manager located?  (I.e., is it a separate class, part of BufferPool, etc.)
 
-	(Replace this text with your answer)
+	It's a nested class inside bufferpool
 
 b) What specific information do you store and how do you store it?  
 
-	(Replace this text with your answer)
+	I store the list of requests for a page in a queue, a list of requests that are holding the lock in another queue. Request object includes 		TransactionId and Permissions.
 
 c) Briefly describe what happens when a new transaction requests a page.  I.e., walk thru how the lock manager decides whether or not to grant the request.  Your description should reference the data structures that describe in part (b).
 
-	(Replace this text with your answer)
+	I just put the new request into the end of requests queue. However, if it is an upgrade request, it should be put to the beginning of the 		queue. If there are no request holding the lock, the new request will be granted the lock immediately. If the requests are holding the lock 		are read requests, we grant the lock the new read-only requests, otherwise new requests have to wait. When some locks are released, we check 		out the first waiting request. If it is in write-read mode, we grant the lock only when there's no other lock currently held. If it is in 		read-only mode, we grant the lock if the remaining locks are also in read-only mode, and then proceed to next request in similar manner. We 		stop when we find the first write-read request.
 
 d) Briefly explain how you manage locks when inserting a tuple into a HeapFile.  In particular, how do you acquire/release locks when looking for a page to insert.
 
-	(Replace this text with your answer)
+	For each page that I'm considering, acquire a write lock on that page and check if I can insert the tuple in there. Release the lock if the 		page is full or the tuple is successfully inserted.

@@ -3,6 +3,7 @@ package simpledb;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
@@ -46,7 +47,14 @@ public class BufferPool {
 			lockHolders = new LinkedList<Request>();
 			isReadLock = false;
 		}
-		public void addRequest(TransactionId tid, Permissions perm){
+		public TransactionId getLastRequest(){
+			if (!requests.isEmpty()){
+				return requests.getLast().getTid();
+			}else{
+				return null;
+			}
+		}
+		public void addRequest(TransactionId tid, Permissions perm){			
 			Request currReq = new Request(tid, perm);
 			boolean isDuplicate = false;
 			for (Request req: lockHolders){
@@ -57,20 +65,21 @@ public class BufferPool {
 			}
 			if (isDuplicate && perm == Permissions.READ_WRITE){
 				requests.add(0, currReq);
-			}
-			requests.add(currReq);			
+			}else{
+				requests.add(currReq);	
+			}			
 		}
 		public void remove(TransactionId tid){
-			for (Request req: requests){
+			LinkedList<Request> reqCopy = new LinkedList<Request>(requests);
+			LinkedList<Request> holdCopy = new LinkedList<Request>(lockHolders);
+			for (Request req: reqCopy){
 				if (req.getTid() == tid){
 					requests.remove(req);
-					break;
 				}
 			}
-			for (Request req: lockHolders){
+			for (Request req: holdCopy){
 				if (req.getTid() == tid){
 					lockHolders.remove(req);
-					break;
 				}
 			}
 		}
@@ -83,25 +92,41 @@ public class BufferPool {
 					}else{
 						for (Request req:requests){
 							if (req.getPerm() == Permissions.READ_ONLY){
-								lockHolders.add(req);
-							}else{
+								boolean isDup = false;
+								for (Request hold: lockHolders){
+									if (hold.getTid() == req.getTid()){
+										isDup = true;
+									}
+								}
+								if (!isDup){
+									lockHolders.add(req);
+								}
+							}else if (req.getPerm() == Permissions.READ_WRITE){
 								break;
 							}
 						}
 						isReadLock = true;
 					}
 				}
-			}else{
-				if (isReadLock){
+			}else{				
+				if (isReadLock){					
 					for (Request req:requests){
-						if (req.getPerm() == Permissions.READ_ONLY){
-							lockHolders.add(req);
-						}else{
+						if (req.getPerm() == Permissions.READ_ONLY && !lockHolders.contains(req)){
+							boolean isDup = false;
+							for (Request hold: lockHolders){
+								if (hold.getTid() == req.getTid()){
+									isDup = true;
+								}
+							}
+							if (!isDup){
+								lockHolders.add(req);
+							}
+						}else if (req.getPerm() == Permissions.READ_WRITE){
 							break;
 						}
 					}
 				}
-			}			
+			}
 		}
 		public boolean holdsLock(TransactionId tid){
 			for (Request req: lockHolders){
@@ -124,7 +149,60 @@ public class BufferPool {
 			}
 		}
 	}
+	public class PrecedenceGraph{
+		HashMap<TransactionId, LinkedList<TransactionId>> graph;
+		public PrecedenceGraph(){
+			graph = new HashMap<TransactionId, LinkedList<TransactionId>>();
+		}
+		public void addVertex(TransactionId tid){
+			if (!graph.containsKey(tid)){
+				graph.put(tid, new LinkedList<TransactionId>());
+			}
+		}
+		public void addEdge(TransactionId from, TransactionId to){
+			if (from != to){
+				LinkedList<TransactionId> adj = graph.get(from);
+				adj.add(to);
+				graph.put(from, adj);
+			}
+		}
+		public void remove(TransactionId tid){
+			graph.remove(tid);
+		}
+		public boolean contains(TransactionId tid){
+			return graph.containsKey(tid);
+		}
+		public boolean hasCycle(){
+			HashSet<TransactionId> visited = new HashSet<TransactionId>();
+			HashMap<TransactionId, Boolean> stack = new HashMap<TransactionId, Boolean>();
+			for (TransactionId tid: graph.keySet()){
+				if (cycleUtil(tid, visited, stack)){
+					return true;
+				}
+			}
+			return false;
+		}
+		public boolean cycleUtil(TransactionId tid, HashSet<TransactionId> visited, HashMap<TransactionId, Boolean> stack){
+			if (!visited.contains(tid)){
+				visited.add(tid);
+				stack.put(tid, new Boolean(true));
+				if (graph.get(tid) != null){
+					for (TransactionId adj: graph.get(tid)){
+						if (!visited.contains(adj) && cycleUtil(adj, visited, stack)){
+							return true;
+						}else if (stack.get(adj).booleanValue() == true){
+							return true;
+						}
+					}
+				}
+			}
+			stack.put(tid, new Boolean(false));
+			return false;
+		}
+	}
 	HashMap<PageId, LockManager> lockTable;
+	HashMap<TransactionId, LinkedList<PageId>> transTable;
+	PrecedenceGraph graph;
     /**
      * Bytes per page, including header.
      */
@@ -153,6 +231,8 @@ public class BufferPool {
     	accessTime = new HashMap<PageId, Long>();
     	this.numPages = numPages;
     	lockTable = new HashMap<PageId, LockManager>();
+    	transTable = new HashMap<TransactionId, LinkedList<PageId>>();
+    	graph = new PrecedenceGraph();
     }
 
     public static int getPageSize() {
@@ -196,17 +276,33 @@ public class BufferPool {
     			pool.put(pid, currentPage);
     		}
     	}
-        LockManager currLock; 
+        LockManager currLock;
+        LinkedList<PageId> pages;
         synchronized(this){
         	currLock = lockTable.get(pid);
+        	pages = transTable.get(tid);
         	if (currLock == null){
         		currLock = new LockManager();
         		lockTable.put(pid, currLock);
+        	}
+        	if (pages == null){
+        		pages = new LinkedList<PageId>();
+        		transTable.put(tid, pages);
+        	}
+        	graph.addVertex(tid);
+        	TransactionId adj = currLock.getLastRequest();
+        	if (adj != null){
+        		graph.addEdge(tid, currLock.getLastRequest());
+        	}
+        	if (graph.hasCycle()){
+        		throw new TransactionAbortedException();
         	}
         }
         synchronized (currLock){
         	currLock.addRequest(tid, perm);
         	currLock.updateLock();
+        	pages.add(pid);
+        	transTable.put(tid, pages);
         	while (!currLock.holdsLock(tid)){
         		try {
         			synchronized(this){
@@ -235,12 +331,10 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LockManager currLock = lockTable.get(pid);
-    	synchronized(currLock){    		
+    	synchronized (this){
     		currLock.remove(tid);
     		currLock.updateLock();
-    		synchronized(this){
-    			notifyAll();
-    		}
+    		notifyAll();
     	}
     }
 
@@ -252,6 +346,7 @@ public class BufferPool {
     public void transactionComplete(TransactionId tid) throws IOException {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
+    	transactionComplete(tid, true);
     }
 
     /**
@@ -280,6 +375,22 @@ public class BufferPool {
             throws IOException {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
+    	LinkedList<PageId> pages = transTable.get(tid);
+    	if (pages != null){
+    		for (PageId page: pages){
+    			releasePage(tid, page);
+    			if (commit){
+    				flushPage(page);
+    			}else{
+    				int tableId = page.getTableId();
+    				Catalog currentCatalog = Database.getCatalog();
+    				DbFile file = currentCatalog.getDatabaseFile(tableId);
+    				pool.put(page, file.readPage(page));
+    			}
+    		}    	
+    		transTable.remove(tid);
+    		graph.remove(tid);
+    	}
     }
 
     /**
@@ -378,6 +489,10 @@ public class BufferPool {
     public synchronized void flushPages(TransactionId tid) throws IOException {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
+    	LinkedList<PageId> pages = transTable.get(tid);
+    	for (PageId page: pages){
+    		flushPage(page);
+    	}
     }
 
     /**
