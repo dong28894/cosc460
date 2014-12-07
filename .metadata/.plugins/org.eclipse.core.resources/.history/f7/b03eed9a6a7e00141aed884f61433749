@@ -93,6 +93,7 @@ class LogFileRecovery {
      * @throws java.io.IOException if tidToRollback has already committed
      */
     public void rollback(TransactionId tidToRollback) throws IOException {
+    	print();
     	long currOffset = readOnlyLog.length() - LogFile.LONG_SIZE;
         readOnlyLog.seek(currOffset); 
         while (currOffset > 0){
@@ -101,6 +102,7 @@ class LogFileRecovery {
         	int type = readOnlyLog.readInt();
         	long tid = readOnlyLog.readLong();
         	if (type == LogType.UPDATE_RECORD && tid == tidToRollback.getId()){
+        		System.out.println("Update");
         		Page beforeImg = LogFile.readPageData(readOnlyLog);
         		PageId pid = beforeImg.getId();
                 int tableId = pid.getTableId();

@@ -13,10 +13,9 @@ Exercise 1.
     LogFile.force is called right after LogFile.logWrite in flushPage to make sure that the log record is on disk before the page is written to disk.
 
 
-
 3. Where is setBeforeImage image called?  
 
-    setBeforeImage is called in the constructor of HeapPage to initialize the first image of the page, and is also called in transactionComplete to update the image each time we finish with a transaction.
+    <Replace this text with your answer>
 
 
 Exercise 4.

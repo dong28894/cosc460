@@ -374,7 +374,8 @@ public class BufferPool {
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LinkedList<PageId> pages = transTable.get(tid);
     	if (pages != null){
-    		for (PageId page: pages){    			
+    		for (PageId page: pages){
+    			releasePage(tid, page);
     			if (commit){
     				flushPage(page);
     			}else{
@@ -383,10 +384,6 @@ public class BufferPool {
     				DbFile file = currentCatalog.getDatabaseFile(tableId);
     				pool.put(page, file.readPage(page));
     			}
-    			// use current page contents as the before-image
-    	        // for the next transaction that modifies this page.
-    	        pool.get(page).setBeforeImage();
-    			releasePage(tid, page);
     		}    	
     		transTable.remove(tid);
     	}
@@ -494,10 +491,8 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LinkedList<PageId> pages = transTable.get(tid);
-    	if (pages != null){
-    		for (PageId page: pages){
-    			flushPage(page);
-    		}
+    	for (PageId page: pages){
+    		flushPage(page);
     	}
     }
 

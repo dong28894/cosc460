@@ -494,10 +494,8 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LinkedList<PageId> pages = transTable.get(tid);
-    	if (pages != null){
-    		for (PageId page: pages){
-    			flushPage(page);
-    		}
+    	for (PageId page: pages){
+    		flushPage(page);
     	}
     }
 

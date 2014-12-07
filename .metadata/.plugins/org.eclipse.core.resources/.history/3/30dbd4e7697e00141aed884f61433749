@@ -108,7 +108,7 @@ class LogFileRecovery {
         	    DbFile file = currentCatalog.getDatabaseFile(tableId);
         	    file.writePage(beforeImg);
         	}else if (type == LogType.COMMIT_RECORD && tid == tidToRollback.getId()){
-        		throw new IOException();
+        		break;
         	}
         	currOffset = startOfRecord - LogFile.LONG_SIZE;
         	readOnlyLog.seek(currOffset);

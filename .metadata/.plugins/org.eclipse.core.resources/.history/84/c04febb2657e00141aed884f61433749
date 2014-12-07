@@ -96,23 +96,9 @@ class LogFileRecovery {
     	long currOffset = readOnlyLog.length() - LogFile.LONG_SIZE;
         readOnlyLog.seek(currOffset); 
         while (currOffset > 0){
-        	long startOfRecord = readOnlyLog.readLong();
-        	readOnlyLog.seek(startOfRecord);
-        	int type = readOnlyLog.readInt();
-        	long tid = readOnlyLog.readLong();
-        	if (type == LogType.UPDATE_RECORD && tid == tidToRollback.getId()){
-        		Page beforeImg = LogFile.readPageData(readOnlyLog);
-        		PageId pid = beforeImg.getId();
-                int tableId = pid.getTableId();
-        	    Catalog currentCatalog = Database.getCatalog();
-        	    DbFile file = currentCatalog.getDatabaseFile(tableId);
-        	    file.writePage(beforeImg);
-        	}else if (type == LogType.COMMIT_RECORD && tid == tidToRollback.getId()){
-        		throw new IOException();
-        	}
-        	currOffset = startOfRecord - LogFile.LONG_SIZE;
-        	readOnlyLog.seek(currOffset);
+        	long startOfRecord = readOnlyLog.seek(readOnlyLog.getFilePointer()-LogFile.LONG_SIZE).readLong();
         }
+        // some code goes here
     }
 
     /**
