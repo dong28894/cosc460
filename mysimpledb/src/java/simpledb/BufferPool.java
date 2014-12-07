@@ -47,25 +47,24 @@ public class BufferPool {
 			lockHolders = new LinkedList<Request>();
 			isReadLock = false;
 		}
-		public TransactionId getLastRequest(){
-			if (!requests.isEmpty()){
-				return requests.getLast().getTid();
-			}else{
-				return null;
-			}
-		}
 		public void addRequest(TransactionId tid, Permissions perm){			
 			Request currReq = new Request(tid, perm);
 			boolean isDuplicate = false;
 			for (Request req: lockHolders){
-				if (req.getTid() == tid){
+				if (req.getTid().equals(tid)){
 					isDuplicate = true;
 					break;
 				}
 			}
-			if (isDuplicate && perm == Permissions.READ_WRITE){
+			for (Request req: requests){
+				if (req.getTid().equals(tid)){
+					isDuplicate = true;
+					break;
+				}
+			}
+			if (isDuplicate && perm.equals(Permissions.READ_WRITE)){
 				requests.add(0, currReq);
-			}else{
+			}else if (!isDuplicate){
 				requests.add(currReq);	
 			}			
 		}
@@ -73,64 +72,73 @@ public class BufferPool {
 			LinkedList<Request> reqCopy = new LinkedList<Request>(requests);
 			LinkedList<Request> holdCopy = new LinkedList<Request>(lockHolders);
 			for (Request req: reqCopy){
-				if (req.getTid() == tid){
+				if (req.getTid().equals(tid)){
 					requests.remove(req);
 				}
 			}
 			for (Request req: holdCopy){
-				if (req.getTid() == tid){
+				if (req.getTid().equals(tid)){
 					lockHolders.remove(req);
 				}
 			}
 		}
 		public void updateLock(){
+			LinkedList<Request> reqCopy = new LinkedList<Request>(requests);
 			if (lockHolders.isEmpty()){
 				if (!requests.isEmpty()){
-					if (requests.peek().getPerm() == Permissions.READ_WRITE){
-						lockHolders.add(requests.peek());
+					if (requests.peek().getPerm().equals(Permissions.READ_WRITE)){
+						lockHolders.add(requests.remove());
 						isReadLock = false;
 					}else{
-						for (Request req:requests){
-							if (req.getPerm() == Permissions.READ_ONLY){
-								boolean isDup = false;
-								for (Request hold: lockHolders){
-									if (hold.getTid() == req.getTid()){
-										isDup = true;
-									}
-								}
-								if (!isDup){
+						isReadLock = true;						
+						for (Request req:reqCopy){
+							if (req.getPerm().equals(Permissions.READ_ONLY)){
+								requests.remove(req);
+								lockHolders.add(req);
+							}else if (req.getPerm().equals(Permissions.READ_WRITE)){
+								if (lockHolders.size() == 1 && lockHolders.peek().getTid().equals(req.getTid())){
+									requests.remove(req);
 									lockHolders.add(req);
+									isReadLock = false;
+									break;
+								}else{
+									break;
 								}
-							}else if (req.getPerm() == Permissions.READ_WRITE){
-								break;
 							}
-						}
-						isReadLock = true;
+						}						
 					}
 				}
 			}else{				
-				if (isReadLock){					
-					for (Request req:requests){
-						if (req.getPerm() == Permissions.READ_ONLY && !lockHolders.contains(req)){
-							boolean isDup = false;
-							for (Request hold: lockHolders){
-								if (hold.getTid() == req.getTid()){
-									isDup = true;
-								}
-							}
-							if (!isDup){
+				if (isReadLock){
+					for (Request req:reqCopy){
+						if (req.getPerm().equals(Permissions.READ_ONLY)){
+							requests.remove(req);
+							lockHolders.add(req);
+						}else if (req.getPerm().equals(Permissions.READ_WRITE)){
+							if (lockHolders.size() == 1 && lockHolders.peek().getTid().equals(req.getTid())){
+								requests.remove(req);
 								lockHolders.add(req);
+								isReadLock = false;
+								break;
+							}else{
+								break;
 							}
-						}else if (req.getPerm() == Permissions.READ_WRITE){
-							break;
 						}
 					}
 				}
 			}
 		}
+		public boolean holdsLock(TransactionId tid, Permissions perm){
+			for (Request req: lockHolders){
+				if (req.getTid().equals(tid) && (req.getPerm().equals(Permissions.READ_WRITE) || req.getPerm().equals(perm))){
+					return true;
+				}
+			}
+			return false;
+		}
 		public boolean holdsLock(TransactionId tid){
 			for (Request req: lockHolders){
-				if (req.getTid() == tid){
+				if (req.getTid().equals(tid)){
 					return true;
 				}
 			}
@@ -149,6 +157,7 @@ public class BufferPool {
 			}
 		}
 	}
+	/*
 	public class PrecedenceGraph{
 		HashMap<TransactionId, LinkedList<TransactionId>> graph;
 		public PrecedenceGraph(){
@@ -199,10 +208,9 @@ public class BufferPool {
 			stack.put(tid, new Boolean(false));
 			return false;
 		}
-	}
+	}*/
 	HashMap<PageId, LockManager> lockTable;
 	HashMap<TransactionId, LinkedList<PageId>> transTable;
-	PrecedenceGraph graph;
     /**
      * Bytes per page, including header.
      */
@@ -232,7 +240,6 @@ public class BufferPool {
     	this.numPages = numPages;
     	lockTable = new HashMap<PageId, LockManager>();
     	transTable = new HashMap<TransactionId, LinkedList<PageId>>();
-    	graph = new PrecedenceGraph();
     }
 
     public static int getPageSize() {
@@ -262,8 +269,10 @@ public class BufferPool {
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
         // some code goes here
-    	Page currentPage;
-    	synchronized (this){
+    	Page currentPage; 
+    	LockManager currLock;
+    	LinkedList<PageId> pages;
+    	synchronized(this){
     		currentPage = (Page) pool.get(pid);
     		if (currentPage == null){
     			if (pool.size() == numPages){
@@ -275,42 +284,31 @@ public class BufferPool {
     			currentPage = file.readPage(pid);
     			pool.put(pid, currentPage);
     		}
+    		currLock = lockTable.get(pid);
+    		pages = transTable.get(tid);
+    		if (currLock == null){
+    			currLock = new LockManager();
+    			lockTable.put(pid, currLock);
+    		}
+    		if (pages == null){
+    			pages = new LinkedList<PageId>();
+    			transTable.put(tid, pages);
+    		}        
     	}
-        LockManager currLock;
-        LinkedList<PageId> pages;
-        synchronized(this){
-        	currLock = lockTable.get(pid);
-        	pages = transTable.get(tid);
-        	if (currLock == null){
-        		currLock = new LockManager();
-        		lockTable.put(pid, currLock);
-        	}
-        	if (pages == null){
-        		pages = new LinkedList<PageId>();
-        		transTable.put(tid, pages);
-        	}
-        	graph.addVertex(tid);
-        	TransactionId adj = currLock.getLastRequest();
-        	if (adj != null){
-        		graph.addEdge(tid, currLock.getLastRequest());
-        	}
-        	if (graph.hasCycle()){
-        		throw new TransactionAbortedException();
-        	}
-        }
         synchronized (currLock){
         	currLock.addRequest(tid, perm);
-        	currLock.updateLock();
+        	currLock.updateLock();        	
         	pages.add(pid);
         	transTable.put(tid, pages);
-        	while (!currLock.holdsLock(tid)){
+        	while (!currLock.holdsLock(tid, perm)){
         		try {
-        			synchronized(this){
-        				wait();
-        			}
+        			Thread.sleep(100);
         		} catch (InterruptedException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();
+        		}
+        		if (!currLock.holdsLock(tid, perm)){
+        			throw new TransactionAbortedException();
         		}
         	}        	
         }
@@ -331,10 +329,9 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LockManager currLock = lockTable.get(pid);
-    	synchronized (this){
+    	synchronized (currLock){
     		currLock.remove(tid);
     		currLock.updateLock();
-    		notifyAll();
     	}
     }
 
@@ -389,7 +386,6 @@ public class BufferPool {
     			}
     		}    	
     		transTable.remove(tid);
-    		graph.remove(tid);
     	}
     }
 
@@ -474,7 +470,7 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1
     	Page pg = pool.get(pid);
-    	if (pg.isDirty() != null){
+    	if (pg != null && pg.isDirty() != null){
     	    int tableId = pid.getTableId();
     	    Catalog currentCatalog = Database.getCatalog();
     	    DbFile file = currentCatalog.getDatabaseFile(tableId);    	

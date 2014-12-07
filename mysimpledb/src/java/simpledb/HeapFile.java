@@ -162,7 +162,7 @@ public class HeapFile implements DbFile {
         // some code goes here
     	HeapPage currPage;
     	for (int i = 0; i < numPages(); i++){
-    		currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), i), Permissions.READ_ONLY);
+    		currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), i), Permissions.READ_WRITE);
     		if (currPage.getNumEmptySlots() != 0){
     			currPage.insertTuple(t);   
     			ArrayList<Page> modPg = new ArrayList<Page>();
@@ -171,13 +171,12 @@ public class HeapFile implements DbFile {
     		}
     	}
         byte[] newPageData = HeapPage.createEmptyPageData();
-        currPage = new HeapPage(new HeapPageId(getId(), numPages()), newPageData);
-        currPage.insertTuple(t);
-        newPageData = currPage.getPageData();
         BufferedOutputStream file = new BufferedOutputStream(new FileOutputStream(f, true));
         file.write(newPageData);
         file.flush();
         file.close();
+        currPage = (HeapPage) Database.getBufferPool().getPage(tid, new HeapPageId(getId(), numPages()-1), Permissions.READ_WRITE);
+        currPage.insertTuple(t);        
         ArrayList<Page> modPg = new ArrayList<Page>();
 	    modPg.add(currPage);
 	    return modPg;
