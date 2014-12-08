@@ -10,8 +10,7 @@ Exercise 1.
 
 2. Where is LogFile.force called?  You should include usages inside other LogFile methods.  For each usage, why is it important that force is called?
 
-    LogFile.force is called right after LogFile.logWrite in flushPage to make sure that the log record is on disk before the page is written to disk.
-
+    LogFile.force is called right after LogFile.logWrite in flushPage to make sure that the log record is on disk before the page is written to disk. Besides, LogFile.force is also called when a commit, abort or checkpoint record is written. It is important to have those record flushed to disk right after it is created because it affects the decision whether to undo or redo a transaction when we recover from a system crash.
 
 
 3. Where is setBeforeImage image called?  
