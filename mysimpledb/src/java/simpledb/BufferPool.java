@@ -372,23 +372,27 @@ public class BufferPool {
             throws IOException {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
-    	LinkedList<PageId> pages = transTable.get(tid);
-    	if (pages != null){
-    		for (PageId page: pages){    			
-    			if (commit){
-    				flushPage(page);
-    			}else{
-    				int tableId = page.getTableId();
-    				Catalog currentCatalog = Database.getCatalog();
-    				DbFile file = currentCatalog.getDatabaseFile(tableId);
-    				pool.put(page, file.readPage(page));
-    			}
-    			// use current page contents as the before-image
-    	        // for the next transaction that modifies this page.
-    	        pool.get(page).setBeforeImage();
-    			releasePage(tid, page);
-    		}    	
-    		transTable.remove(tid);
+    	synchronized(this){
+    		LinkedList<PageId> pages = transTable.get(tid);
+    		if (pages != null){
+    			for (PageId page: pages){    			
+    				if (commit){
+    					flushPage(page);
+    				}else{
+    					int tableId = page.getTableId();
+    					Catalog currentCatalog = Database.getCatalog();
+    					DbFile file = currentCatalog.getDatabaseFile(tableId);
+    					pool.put(page, file.readPage(page));
+    				}
+    				// use current page contents as the before-image
+    				// for the next transaction that modifies this page.
+    				if (pool.containsKey(page)){
+    					pool.get(page).setBeforeImage();
+    				}
+    				releasePage(tid, page);
+    			}    	
+    			transTable.remove(tid);
+    		}
     	}
     }
 
@@ -410,10 +414,12 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
-    	DbFile currFile = Database.getCatalog().getDatabaseFile(tableId);
-    	ArrayList<Page> modPgs = currFile.insertTuple(tid, t);
-    	for (Page pg: modPgs){
-    		pg.markDirty(true, tid);
+    	synchronized(this){
+    		DbFile currFile = Database.getCatalog().getDatabaseFile(tableId);
+    		ArrayList<Page> modPgs = currFile.insertTuple(tid, t);
+    		for (Page pg: modPgs){
+    			pg.markDirty(true, tid);
+    		}
     	}
     }
 
@@ -433,10 +439,12 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
-    	DbFile currFile = Database.getCatalog().getDatabaseFile(t.getRecordId().getPageId().getTableId());
-    	ArrayList<Page> modPgs = currFile.deleteTuple(tid, t);
-    	for (Page pg: modPgs){
-    		pg.markDirty(true, tid);
+    	synchronized(this){
+    		DbFile currFile = Database.getCatalog().getDatabaseFile(t.getRecordId().getPageId().getTableId());
+    		ArrayList<Page> modPgs = currFile.deleteTuple(tid, t);
+    		for (Page pg: modPgs){
+    			pg.markDirty(true, tid);
+    		}
     	}
     }
 
@@ -521,6 +529,12 @@ public class BufferPool {
     	if (oldestPage == null){
     		throw new DbException("All pages are dirty");
     	}
+    	try {
+			flushPage(oldestPage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	pool.remove(oldestPage);
     	accessTime.remove(oldestPage);
     }

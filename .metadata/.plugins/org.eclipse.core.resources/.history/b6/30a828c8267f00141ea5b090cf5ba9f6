@@ -56,6 +56,12 @@ public class BufferPool {
 					break;
 				}
 			}
+			for (Request req: requests){
+				if (req.getTid().equals(tid)){
+					isDuplicate = true;
+					break;
+				}
+			}
 			if (isDuplicate && perm.equals(Permissions.READ_WRITE)){
 				requests.add(0, currReq);
 			}else if (!isDuplicate){
@@ -81,25 +87,20 @@ public class BufferPool {
 			if (lockHolders.isEmpty()){
 				if (!requests.isEmpty()){
 					if (requests.peek().getPerm().equals(Permissions.READ_WRITE)){
-						lockHolders.add(requests.peek());
+						lockHolders.add(requests.remove());
 						isReadLock = false;
 					}else{
 						isReadLock = true;						
 						for (Request req:reqCopy){
 							if (req.getPerm().equals(Permissions.READ_ONLY)){
-								boolean isDup = false;
-								for (Request hold: lockHolders){
-									if (hold.getTid().equals(req.getTid())){
-										isDup = true;
-									}
-								}
-								if (!isDup){
-									lockHolders.add(req);
-								}
+								requests.remove(req);
+								lockHolders.add(req);
 							}else if (req.getPerm().equals(Permissions.READ_WRITE)){
 								if (lockHolders.size() == 1 && lockHolders.peek().getTid().equals(req.getTid())){
+									requests.remove(req);
 									lockHolders.add(req);
 									isReadLock = false;
+									break;
 								}else{
 									break;
 								}
@@ -110,20 +111,15 @@ public class BufferPool {
 			}else{				
 				if (isReadLock){
 					for (Request req:reqCopy){
-						if (req.getPerm().equals(Permissions.READ_ONLY) && !lockHolders.contains(req)){
-							boolean isDup = false;
-							for (Request hold: lockHolders){
-								if (hold.getTid().equals(req.getTid())){
-									isDup = true;
-								}
-							}
-							if (!isDup){
-								lockHolders.add(req);
-							}
+						if (req.getPerm().equals(Permissions.READ_ONLY)){
+							requests.remove(req);
+							lockHolders.add(req);
 						}else if (req.getPerm().equals(Permissions.READ_WRITE)){
 							if (lockHolders.size() == 1 && lockHolders.peek().getTid().equals(req.getTid())){
+								requests.remove(req);
 								lockHolders.add(req);
 								isReadLock = false;
+								break;
 							}else{
 								break;
 							}
@@ -273,8 +269,10 @@ public class BufferPool {
     public Page getPage(TransactionId tid, PageId pid, Permissions perm)
             throws TransactionAbortedException, DbException {
         // some code goes here
-    	Page currentPage;
-    	synchronized (this){
+    	Page currentPage; 
+    	LockManager currLock;
+    	LinkedList<PageId> pages;
+    	synchronized(this){
     		currentPage = (Page) pool.get(pid);
     		if (currentPage == null){
     			if (pool.size() == numPages){
@@ -286,21 +284,17 @@ public class BufferPool {
     			currentPage = file.readPage(pid);
     			pool.put(pid, currentPage);
     		}
+    		currLock = lockTable.get(pid);
+    		pages = transTable.get(tid);
+    		if (currLock == null){
+    			currLock = new LockManager();
+    			lockTable.put(pid, currLock);
+    		}
+    		if (pages == null){
+    			pages = new LinkedList<PageId>();
+    			transTable.put(tid, pages);
+    		}        
     	}
-        LockManager currLock;
-        LinkedList<PageId> pages;
-        synchronized(this){
-        	currLock = lockTable.get(pid);
-        	pages = transTable.get(tid);
-        	if (currLock == null){
-        		currLock = new LockManager();
-        		lockTable.put(pid, currLock);
-        	}
-        	if (pages == null){
-        		pages = new LinkedList<PageId>();
-        		transTable.put(tid, pages);
-        	}
-        }
         synchronized (currLock){
         	currLock.addRequest(tid, perm);
         	currLock.updateLock();        	
@@ -308,9 +302,7 @@ public class BufferPool {
         	transTable.put(tid, pages);
         	while (!currLock.holdsLock(tid, perm)){
         		try {
-        			synchronized(this){
-        				Thread.sleep(5000);
-        			}
+        			Thread.sleep(100);
         		} catch (InterruptedException e) {
         			// TODO Auto-generated catch block
         			e.printStackTrace();
@@ -337,10 +329,9 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LockManager currLock = lockTable.get(pid);
-    	synchronized (this){
+    	synchronized (currLock){
     		currLock.remove(tid);
     		currLock.updateLock();
-    		notifyAll();
     	}
     }
 
@@ -381,20 +372,24 @@ public class BufferPool {
             throws IOException {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
-    	LinkedList<PageId> pages = transTable.get(tid);
-    	if (pages != null){
-    		for (PageId page: pages){
-    			releasePage(tid, page);
-    			if (commit){
-    				flushPage(page);
-    			}else{
+    	synchronized(this){
+    		LinkedList<PageId> pages = transTable.get(tid);
+    		if (pages != null){
+    			for (PageId page: pages){   
     				int tableId = page.getTableId();
-    				Catalog currentCatalog = Database.getCatalog();
-    				DbFile file = currentCatalog.getDatabaseFile(tableId);
-    				pool.put(page, file.readPage(page));
-    			}
-    		}    	
-    		transTable.remove(tid);
+					Catalog currentCatalog = Database.getCatalog();
+					DbFile file = currentCatalog.getDatabaseFile(tableId);
+					Page currentPage = file.readPage(page);
+    				if (commit){
+    					currentPage.setBeforeImage();
+    					flushPage(page);
+    				}else{       				
+    					pool.put(page, currentPage);
+    				}
+    				releasePage(tid, page);
+    			}    	
+    			transTable.remove(tid);
+    		}
     	}
     }
 
@@ -416,10 +411,12 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
-    	DbFile currFile = Database.getCatalog().getDatabaseFile(tableId);
-    	ArrayList<Page> modPgs = currFile.insertTuple(tid, t);
-    	for (Page pg: modPgs){
-    		pg.markDirty(true, tid);
+    	synchronized(this){
+    		DbFile currFile = Database.getCatalog().getDatabaseFile(tableId);
+    		ArrayList<Page> modPgs = currFile.insertTuple(tid, t);
+    		for (Page pg: modPgs){
+    			pg.markDirty(true, tid);
+    		}
     	}
     }
 
@@ -439,10 +436,12 @@ public class BufferPool {
             throws DbException, IOException, TransactionAbortedException {
         // some code goes here
         // not necessary for lab1
-    	DbFile currFile = Database.getCatalog().getDatabaseFile(t.getRecordId().getPageId().getTableId());
-    	ArrayList<Page> modPgs = currFile.deleteTuple(tid, t);
-    	for (Page pg: modPgs){
-    		pg.markDirty(true, tid);
+    	synchronized(this){
+    		DbFile currFile = Database.getCatalog().getDatabaseFile(t.getRecordId().getPageId().getTableId());
+    		ArrayList<Page> modPgs = currFile.deleteTuple(tid, t);
+    		for (Page pg: modPgs){
+    			pg.markDirty(true, tid);
+    		}
     	}
     }
 
@@ -482,7 +481,12 @@ public class BufferPool {
     	if (pg != null && pg.isDirty() != null){
     	    int tableId = pid.getTableId();
     	    Catalog currentCatalog = Database.getCatalog();
-    	    DbFile file = currentCatalog.getDatabaseFile(tableId);    	
+    	    DbFile file = currentCatalog.getDatabaseFile(tableId);   
+    	    // append an update record to the log, with 
+            // a before-image and after-image.
+            TransactionId dirtier = pg.isDirty();
+            Database.getLogFile().logWrite(dirtier, pg.getBeforeImage(), pg);
+            Database.getLogFile().force();
     	    file.writePage(pg);
     	    pg.markDirty(false, pg.isDirty()); 
     	}
@@ -495,8 +499,10 @@ public class BufferPool {
         // some code goes here
         // not necessary for lab1|lab2|lab3|lab4                                                         // cosc460
     	LinkedList<PageId> pages = transTable.get(tid);
-    	for (PageId page: pages){
-    		flushPage(page);
+    	if (pages != null){
+    		for (PageId page: pages){
+    			flushPage(page);
+    		}
     	}
     }
 
@@ -520,6 +526,12 @@ public class BufferPool {
     	if (oldestPage == null){
     		throw new DbException("All pages are dirty");
     	}
+    	try {
+			flushPage(oldestPage);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	pool.remove(oldestPage);
     	accessTime.remove(oldestPage);
     }
