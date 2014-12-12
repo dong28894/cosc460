@@ -107,12 +107,14 @@ class LogFileRecovery {
         	    Catalog currentCatalog = Database.getCatalog();
         	    DbFile file = currentCatalog.getDatabaseFile(tableId);
         	    file.writePage(beforeImg);
+        	    Database.getLogFile().logCLR(tidToRollback.getId(), beforeImg);
         	}else if (type == LogType.COMMIT_RECORD && tid == tidToRollback.getId()){
         		throw new IOException();
         	}
         	currOffset = startOfRecord - LogFile.LONG_SIZE;
         	readOnlyLog.seek(currOffset);
         }
+        Database.getLogFile().logAbort(tidToRollback.getId());
     }
 
     /**
@@ -124,8 +126,59 @@ class LogFileRecovery {
      * the BufferPool are locked.
      */
     public void recover() throws IOException {
-
         // some code goes here
-
+    	HashSet<Long> losers = new HashSet<Long>();
+        readOnlyLog.seek(0);
+        long lastCheckpoint = readOnlyLog.readLong();
+        if (lastCheckpoint != -1){
+        	readOnlyLog.seek(lastCheckpoint);
+        	readOnlyLog.readInt();
+        	readOnlyLog.readLong();
+        	int count = readOnlyLog.readInt();
+            for (int i = 0; i < count; i++) {
+                long nextTid = readOnlyLog.readLong();
+                losers.add(nextTid);
+            }
+            long startOfRecord = readOnlyLog.readLong();
+        }
+        while (readOnlyLog.getFilePointer() < readOnlyLog.length()) {
+            int type = readOnlyLog.readInt();
+            long tid = readOnlyLog.readLong();
+            switch (type) {
+                case LogType.BEGIN_RECORD:
+                    losers.add(tid);
+                    break;
+                case LogType.COMMIT_RECORD:
+                    losers.remove(tid);
+                    break;
+                case LogType.ABORT_RECORD:
+                	losers.remove(tid);
+                    break;                
+                case LogType.UPDATE_RECORD:
+                    Page beforeImg = LogFile.readPageData(readOnlyLog);
+                    Page afterImg = LogFile.readPageData(readOnlyLog);  // after image
+                    PageId pid = afterImg.getId();
+                    int tableId = pid.getTableId();
+            	    Catalog currentCatalog = Database.getCatalog();
+            	    DbFile file = currentCatalog.getDatabaseFile(tableId);
+            	    file.writePage(afterImg);
+                    break;   
+                case LogType.CLR_RECORD:
+                    beforeImg = LogFile.readPageData(readOnlyLog);                     
+                    pid = beforeImg.getId();
+                    tableId = pid.getTableId();
+            	    currentCatalog = Database.getCatalog();
+            	    file = currentCatalog.getDatabaseFile(tableId);
+            	    file.writePage(beforeImg);
+                    break;
+                default:
+                    throw new RuntimeException("Unexpected type!  Type = " + type);
+            }
+            long startOfRecord = readOnlyLog.readLong();   // ignored, only useful when going backwards thru log
+        }
+        for (long loser: losers){
+        	TransactionId tid = new TransactionId(loser);
+        	rollback(tid);
+        }
     }
 }

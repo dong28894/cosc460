@@ -43,21 +43,21 @@ After you complete the lab, please answer the following questions.
 
 8. What is your name?  If you work with a partner, be sure to write both of your names.
 
-    <Replace this text with your answer>
+    Dong Mai
 
 9. What did you think of this assignment?
 
-    <Replace this text with your answer>
+    More manageable than previous labs.
 
 10. What was the hardest part of this assignment?
 
-    <Replace this text with your answer>
+    Still debugging because I have to learn the test code.
 
 11. Describe any missing or incomplete elements of your code.
 
-    <Replace this text with your answer>
+    None
 
 12. Roughly how long did you spend working on this lab?
 
-    <Replace this text with your answer>
+    Roughly 5-7 hours
 
